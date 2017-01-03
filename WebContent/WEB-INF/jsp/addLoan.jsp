@@ -17,7 +17,6 @@
 			<form:form modelAttribute="loanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
-<%-- 					<tr><td>Date:</td><td><form:input id="date" path="date" /></tr> --%>
 					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onblur="fillSecondaryName()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text" onblur="selectAddress()"/></td></tr>
 					<tr><td>Customer ID:</td><td><form:input id="id" path="customer.customerId" disabled="true"></form:input></td></tr>
@@ -25,9 +24,14 @@
 					<tr><td>Post:</td><td><form:input id="post" path="customer.post"/></td></tr>
 					<tr><td>PIN:</td><td><form:input id="pin" path="customer.pin"/></td></tr>
 					<tr><td>Phone:</td><td><form:input id="phone" path="customer.phone"/></td></tr>
-					<tr><td>Amount:</td><td><form:input path="amount" type="text"/></td></tr>
-					<tr><td>Item:</td><td><form:input path="item" type="text"/></td></tr>
-					<tr><td>Weight:</td><td><form:input path="weight" type="text"/></td></tr>
+					<tr><td>Amount:</td><td><form:input id="amount" path="amount" type="text"/></td></tr>
+<%-- 					<tr><td>Item:</td><td><form:input path="item" type="text"/></td></tr> --%>
+<%-- 					<tr><td>Weight:</td><td><form:input path="weight" type="text"/></td></tr> --%>
+				</table>
+				<table id="addItems">
+						<tr><th>Add Items</th></tr>
+						<tr><td>Name</td><td>Weight</td></tr>
+						<tr><td><input name="item0.name" type="text"/></td><td><input name="item0.weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
 				</table>
 			</form:form>
 			<button id="addCustomer" onclick="addCustomer()">Submit</button>
@@ -38,9 +42,10 @@
 		
 		<script type="text/javascript">
 			var customerList = new Array();
+			var itemListId = 0;
 			$(document).ready(function(){
 				$("#name").autocomplete({
-					source: '${pageContext.request.contextPath}/app/customer/nameList',
+					source: '${pageContext.request.contextPath}/app/customer/getNameList',
 				});
 				$("#addressSelectDialog").dialog({
 		               autoOpen: false,  
@@ -51,7 +56,7 @@
 			})
 			function addCustomer(){
 				$("#addLoanDialog").html("");
-				$.post("http://localhost:8080/TM_UI/app/loan/add",
+				$.post("http://localhost:6080/TM_UI/app/loan/add",
 					{
 						'customer.name':$("#name").val().trim(),
 						'customer.secondaryName':$("#secondaryName").val().trim(),
@@ -77,7 +82,7 @@
 					nameList = nameDetail.split('-');
 					document.getElementById('name').value=nameList[0].trim();
 					document.getElementById('secondaryName').value=nameList[1].trim();
-					$.getJSON("http://localhost:8080/TM_UI/app/customer/find",
+					$.getJSON("http://localhost:6080/TM_UI/app/customer/find",
 						{
 							name:nameList[0],
 							secondaryName:nameList[1]
@@ -88,7 +93,7 @@
 				}
 			}
 			function selectAddress(){
-// 				assign value if one address is present
+// 				TODO: assign value if one address is present
 				$("#addressSelectDialog").html("");
 				$.each(customerList, function(i, customer){
 					htmlButton="<button onclick=\"selectedCustomer("+(customer.id)+")\">"+(customer.address)+"</button> ";
@@ -106,6 +111,15 @@
 						document.getElementById("phone").value=customer.phone;
 					}
 				});
+			}
+			function addMoreItem(){
+				alert("hi");
+				itemListId += 1;
+				alert(itemListId);
+				itemRow="<tr><td><input name=\"items"+id+".name\" type=\"text\"/></td>";
+				itemRow+="<td><input name=\"items"+id+".weight\" type=\"text\"/></td></tr>";
+// 				itemRow="<tr><td><input type=\"button\" onclick=\"addMoreItem("+id+")\">Add more items</input></td></tr>";
+ 				$("#addItems").append(itemRow);
 			}
 		</script>
 	</body>

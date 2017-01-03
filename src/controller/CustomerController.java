@@ -34,9 +34,9 @@ public class CustomerController {
 		return mapper.writeValueAsString(customerUtility.findCustomer(name, secondaryName));
 	}
 	@ResponseBody
-	@RequestMapping(value = "/nameList", method = RequestMethod.GET)
-	public List<String> getCustomerNames(@RequestParam("term") String nameQuery) throws Exception {
-		return customerUtility.customerName(nameQuery);
+	@RequestMapping(value = "/getNameList", method = RequestMethod.GET)
+	public List<String> getCustomerNames(@RequestParam("term") String name) throws Exception {
+		return customerUtility.customerName(name);
 	}
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addCustomer(Model model) throws Exception {

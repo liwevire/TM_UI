@@ -42,9 +42,9 @@ public class CustomerUtility extends ConnectionUtility{
 		return customerList;
 	}
 
-	public List<String> customerName(String nameQuery) throws Exception {
-		connection = openConnection("http://localhost:6080/TM_Service/customer/nameList", "GET",
-				"?query="+URLEncoder.encode(nameQuery,"UTF-8"));
+	public List<String> customerName(String name) throws Exception {
+		connection = openConnection("http://localhost:6080/TM_Service/customer/read", "GET",
+				"?name="+URLEncoder.encode(name,"UTF-8"));
 		String output;
 		StringBuffer response = new StringBuffer();
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
