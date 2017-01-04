@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 	<head>
 		<title>TM_UI</title>
@@ -27,14 +28,15 @@
 					<tr><td>Amount:</td><td><form:input id="amount" path="amount" type="text"/></td></tr>
 <%-- 					<tr><td>Item:</td><td><form:input path="item" type="text"/></td></tr> --%>
 <%-- 					<tr><td>Weight:</td><td><form:input path="weight" type="text"/></td></tr> --%>
+
 				</table>
 				<table id="addItems">
 						<tr><th>Add Items</th></tr>
 						<tr><td>Name</td><td>Weight</td></tr>
-						<tr><td><input name="item0.name" type="text"/></td><td><input name="item0.weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
+						<tr><td><input name="items[0].name" type="text"/></td><td><input name="items[0].weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
 				</table>
+				<input type="submit" value="Submit"/>
 			</form:form>
-			<button id="addCustomer" onclick="addCustomer()">Submit</button>
 		</div>
 <!-- 		Hidden divs during page load -->
 		<div id="addressSelectDialog" title="Select address"></div>
@@ -54,28 +56,6 @@
 		               autoOpen: false,  
 		        });
 			})
-			function addCustomer(){
-				$("#addLoanDialog").html("");
-				$.post("http://localhost:6080/TM_UI/app/loan/add",
-					{
-						'customer.name':$("#name").val().trim(),
-						'customer.secondaryName':$("#secondaryName").val().trim(),
-						'customer.id':$("#id").val().trim(),
-						'customer.address':$("#address").val().trim(),
-						'customer.post':$("#post").val().trim(),
-						'customer.pin':$("#pin").val().trim(),
-						'customer.phone':$("#phone").val().trim(),
-						amount:$("#amount").val().trim(),
-						item:$("#item").val().trim(),
-						weight:$("#weight").val().trim()
-					},
-					function(result){
-						$("#addLoanDialog").append(result);
-// 						$("#addLoanDialog").append("</br><button onclick=\"$(\"#addLoanDialog\").dialog(\"close\")\">Close</button>");
-					}					
-				)
-				$("#addLoanDialog" ).dialog("open");
-			}
 			function fillSecondaryName() {
 				if ($("#name")!=null&&$("#name").val().includes('-')){
 					var nameDetail = $("#name").val().trim();
@@ -113,11 +93,10 @@
 				});
 			}
 			function addMoreItem(){
-				alert("hi");
 				itemListId += 1;
 				alert(itemListId);
-				itemRow="<tr><td><input name=\"items"+id+".name\" type=\"text\"/></td>";
-				itemRow+="<td><input name=\"items"+id+".weight\" type=\"text\"/></td></tr>";
+				itemRow="<tr><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
+				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td></tr>";
 // 				itemRow="<tr><td><input type=\"button\" onclick=\"addMoreItem("+id+")\">Add more items</input></td></tr>";
  				$("#addItems").append(itemRow);
 			}
