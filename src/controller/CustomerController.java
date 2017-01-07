@@ -21,7 +21,7 @@ import utility.CustomerUtility;
 @RequestMapping("/customer")
 public class CustomerController {
 	CustomerUtility customerUtility = new CustomerUtility();
-
+	
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String getAllCustomer() throws Exception {
 		System.out.println(customerUtility.getAllCustomers());
@@ -35,8 +35,10 @@ public class CustomerController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/getNameList", method = RequestMethod.GET)
-	public List<String> getCustomerNames(@RequestParam("term") String name) throws Exception {
-		return customerUtility.customerName(name);
+	public String getCustomerNames(@RequestParam("term") String name) throws Exception {
+		List<Customer> customers = customerUtility.customerName(name);
+		String jsonLoad = new ObjectMapper().writeValueAsString(customers);
+		return jsonLoad;
 	}
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addCustomer(Model model) throws Exception {

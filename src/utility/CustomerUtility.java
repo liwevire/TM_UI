@@ -43,7 +43,7 @@ public class CustomerUtility extends ConnectionUtility{
 		return customerList;
 	}
 
-	public List<String> customerName(String name) throws Exception {
+	public List<Customer> customerName(String name) throws Exception {
 		connection = openConnection("http://localhost:6080/TM_Service/customer/read", "GET",
 				"?name="+URLEncoder.encode(name,"UTF-8"));
 		String output;
@@ -55,11 +55,12 @@ public class CustomerUtility extends ConnectionUtility{
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		List<Customer> customers = mapper.readValue(response.toString(), new TypeReference<ArrayList<Customer>>() {});
-		List<String> customerNameList = new ArrayList<String>();
-		for (Customer customer : customers) {
-			customerNameList.add(customer.getName()+'|'+customer.getSecondaryName());
-		}
-		return customerNameList;
+//		List<String> customerNameList = new ArrayList<String>();
+//		for (Customer customer : customers) {
+//			customerNameList.add(customer.getName()+'|'+customer.getSecondaryName());
+//		}
+//		return customerNameList;
+		return customers;
 	}
 
 	public String addCustomer(Customer customer) throws Exception {
