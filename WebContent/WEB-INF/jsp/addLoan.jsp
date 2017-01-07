@@ -12,12 +12,18 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <!-- 		<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" /> -->
 		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/ui-lightness/jquery-ui.css" />
+		<style>
+		  .ui-autocomplete-loading {
+		    background: white url("/TM_UI/resources/images/ui-anim_basic_16x16.gif") right center no-repeat;
+		  }
+		</style>
 	</head>
 	<body>
 		<div>
 			<form:form modelAttribute="loanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
+					<tr><td>Date:</td><td><form:input id="date" path="date" type="text"/></td></tr>
 					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onblur="fillSecondaryName()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text" onblur="selectAddress()"/></td></tr>
 					<tr><td>Customer ID:</td><td><form:input id="id" path="customer.customerId" disabled="true"></form:input></td></tr>
@@ -94,12 +100,12 @@
 			}
 			function addMoreItem(){
 				itemListId += 1;
-				alert(itemListId);
 				itemRow="<tr><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
 				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td></tr>";
 // 				itemRow="<tr><td><input type=\"button\" onclick=\"addMoreItem("+id+")\">Add more items</input></td></tr>";
  				$("#addItems").append(itemRow);
 			}
+			$('#date').datepicker({defaultDate:new Date()});
 		</script>
 	</body>
 </html>

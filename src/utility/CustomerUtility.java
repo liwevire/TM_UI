@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Customer;
 
@@ -53,7 +54,11 @@ public class CustomerUtility extends ConnectionUtility{
 			}
 		}
 		ObjectMapper mapper = new ObjectMapper();
-		List<String> customerNameList = mapper.readValue(response.toString(), ArrayList.class);
+		List<Customer> customers = mapper.readValue(response.toString(), new TypeReference<ArrayList<Customer>>() {});
+		List<String> customerNameList = new ArrayList<String>();
+		for (Customer customer : customers) {
+			customerNameList.add(customer.getName()+'|'+customer.getSecondaryName());
+		}
 		return customerNameList;
 	}
 
