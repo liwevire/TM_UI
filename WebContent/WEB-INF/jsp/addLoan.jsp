@@ -20,10 +20,11 @@
 			<form:form modelAttribute="loanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
-					<tr><td>Date:</td><td><form:input id="date" path="date" type="text"/></td></tr>
-					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text"/></td></tr>
+					<tr><td>Date:</td><td><form:input id="loanDate" path="date" type="text"/></td></tr>
+					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onchange="clearDetails()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text"/></td></tr>
-					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" disabled="true"></form:input></td></tr>
+					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" readonly="readonly"></form:input></td></tr>
+					<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="readonly"></form:input></td></tr>
 					<tr><td>Address:</td><td><form:input id="address" path="customer.address" type="text"/></td></tr>
 					<tr><td>Post:</td><td><form:input id="post" path="customer.post"/></td></tr>
 					<tr><td>PIN:</td><td><form:input id="pin" path="customer.pin"/></td></tr>
@@ -35,13 +36,12 @@
 						<tr><td>Name</td><td>Weight</td></tr>
 						<tr><td><input name="items[0].name" type="text"/></td><td><input name="items[0].weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
 				</table>
-				<input type="submit" value="Submit"/>
+				<input id="formSubmit" type="submit" value="Submit"/>
 			</form:form>
 		</div>
 		
 		<script type="text/javascript">
-			//var customerList = new Array();
-			//var itemListId = 0;
+			itemListId = 0;
 			$(document).ready(function(){
 				$("#name").autocomplete({
 					source: '${pageContext.request.contextPath}/app/customer/getNameList',
@@ -49,6 +49,7 @@
 						$('#name').val(ui.item.name);
 						$('#secondaryName').val(ui.item.secondaryName);
 						$('#customerId').val(ui.item.customerId);
+						$('#customerDate').val(new Date(ui.item.date));
 						$('#address').val(ui.item.address);
 						$('#post').val(ui.item.post);
 						$('#pin').val(ui.item.pin);
@@ -63,11 +64,29 @@
 			});
 			function addMoreItem(){
 				itemListId += 1;
-				itemRow="<tr><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
-				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td></tr>";
+				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
+				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td>";
+				if(itemListId == 1){
+					itemRow+="<td><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\"/></td>";
+				}
+				itemRow+="</tr>";
  				$("#addItems").append(itemRow);
 			}
-			$('#date').datepicker({defaultDate:new Date()});
+			function removeItem(){
+ 				$("#moreRow"+itemListId).remove();
+ 				itemListId -= 1;
+			}
+			$('#loanDate').datepicker({defaultDate:new Date()});
+			function clearDetails(){
+				$('#secondaryName').val('');
+				$('#customerId').val('');
+				$('#customerDate').val(new Date());
+				$('#address').val('');
+				$('#post').val('');
+				$('#pin').val('');
+				$('#phone').val('');
+			}
+			
 		</script>
 	</body>
 </html>
