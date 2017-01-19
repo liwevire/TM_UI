@@ -3,9 +3,13 @@ package utility;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.Customer;
 import model.Loan;
 
 public class LoanUtility extends ConnectionUtility{
@@ -29,5 +33,20 @@ public class LoanUtility extends ConnectionUtility{
 			}
 		}
 		return response.toString();
+	}
+	public Loan getLoan(long loanId) throws Exception {
+		String query = "?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8");
+		connection = openConnection("http://localhost:6080/TM_Service/loan/get", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		System.out.println(response);
+		Loan loan = mapper.readValue(response.toString(), Loan.class);
+		System.out.println(loan.getCustomer().getName());
+		return loan;
 	}
 }

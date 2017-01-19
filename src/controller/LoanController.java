@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,21 +21,35 @@ import utility.LoanUtility;
 public class LoanController {
 	LoanUtility loanUtility = new LoanUtility();
 	@RequestMapping(method=RequestMethod.GET, value="/add")
-	public String newLoan(Model model) throws Exception {
-		model.addAttribute("loanForm", new Loan());
+	public String addLoan(Model model) throws Exception {
+		model.addAttribute("addLoanForm", new Loan());
 		return "addLoan";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/add")
-	public String addLoan(@ModelAttribute("loanForm") Loan loan, @ModelAttribute("customerForm") Customer customer, final RedirectAttributes redirectAttributes) throws Exception {
+	public String addLoan(@ModelAttribute("addLoanForm") Loan loan, @ModelAttribute("customerForm") Customer customer, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
 		String loanId = loanUtility.addLoan(loan);
 		redirectAttributes.addFlashAttribute("loanId",loanId);
 		redirectAttributes.addFlashAttribute("message","Loan added successfully"+loanId);
-		return "redirect:getLoanStatus";
+		return "redirect:getLoanAdditionStatus";
 	}
 	@ResponseBody
-	@RequestMapping(method=RequestMethod.GET, value="/getLoanStatus")
+	@RequestMapping(method=RequestMethod.GET, value="/getLoanAdditionStatus")
 	public String getLoanStatus(@ModelAttribute("message") String status){
 		return status;
+	}
+	@RequestMapping(method=RequestMethod.GET, value="/view")
+	public String viewLoan(Model model) throws Exception {
+		model.addAttribute("editLoanForm", new Loan());
+		return "viewLoan";
+	}
+	@RequestMapping(method=RequestMethod.POST, value="/view")
+	public String viewLoan(Model model, @ModelAttribute("editLoanForm") Loan loan) throws Exception {
+//		loan = new Loan(new Customer("Prem", "T", new Date(), "Sethu Road", "PVI", "614804", "8973760106"),new Date(),(double)10);
+		loanUtility.getLoan(loan.getLoanId());
+//		loan.setCustomer(new Customer("Prem", "T", new Date(), "Sethu Road", "PVI", "614804", "8973760106"));
+		model.addAttribute("loan", loan);
+		System.out.println(loan.getAmount());
+		return "viewLoanLanding";
 	}
 }

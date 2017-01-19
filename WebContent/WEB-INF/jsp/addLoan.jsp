@@ -17,14 +17,14 @@
 	</head>
 	<body>
 		<div>
-			<form:form modelAttribute="loanForm">
+			<form:form modelAttribute="addLoanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
 					<tr><td>Date:</td><td><form:input id="loanDate" path="date" type="text"/></td></tr>
 					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onchange="clearDetails()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text"/></td></tr>
-					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" readonly="readonly"></form:input></td></tr>
-					<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="readonly"></form:input></td></tr>
+					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
+					<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input></td></tr>
 					<tr><td>Address:</td><td><form:input id="address" path="customer.address" type="text"/></td></tr>
 					<tr><td>Post:</td><td><form:input id="post" path="customer.post"/></td></tr>
 					<tr><td>PIN:</td><td><form:input id="pin" path="customer.pin"/></td></tr>
