@@ -79,7 +79,7 @@
 			$('#loanDate').datepicker({defaultDate:new Date()});
 			function clearDetails(){
 				$('#secondaryName').val('');
-				$('#customerId').val('');
+				$('#customerId').val('0');
 				$('#customerDate').val(new Date());
 				$('#address').val('');
 				$('#post').val('');
