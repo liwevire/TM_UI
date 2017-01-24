@@ -22,11 +22,6 @@ import utility.CustomerUtility;
 public class CustomerController {
 	CustomerUtility customerUtility = new CustomerUtility();
 	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String getAllCustomer() throws Exception {
-		System.out.println(customerUtility.getAllCustomers());
-		return "readCustomer";
-	}
 	@ResponseBody
 	@RequestMapping(value = "/find", method = RequestMethod.GET)
 	public String getCustomer(@RequestParam("name") String name,@RequestParam("secondaryName") String secondaryName, Model model) throws Exception {

@@ -13,20 +13,6 @@ import model.Customer;
 
 public class CustomerUtility extends ConnectionUtility{
 	ObjectMapper mapper = new ObjectMapper();
-	public Customer getAllCustomers() throws Exception {
-		Customer customer = null;
-		connection = openConnection("http://localhost:6080/TM_Service/customer/read", "GET", null);
-		String output;
-		StringBuffer response = new StringBuffer();
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-			while ((output = in.readLine()) != null) {
-				response.append(output);
-			}
-		}
-		customer = mapper.readValue(response.toString(), Customer.class);
-		return customer;
-	}
-	
 	public List<Customer> findCustomer(String name, String secondaryName) throws Exception {
 		String query = "?name="+URLEncoder.encode(name,"UTF-8")+"&secondaryName="+ URLEncoder.encode(secondaryName,"UTF-8");
 		connection = openConnection("http://localhost:6080/TM_Service/customer/find", "GET", query);
@@ -53,14 +39,22 @@ public class CustomerUtility extends ConnectionUtility{
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		List<Customer> customers = mapper.readValue(response.toString(), new TypeReference<ArrayList<Customer>>() {});
-//		List<String> customerNameList = new ArrayList<String>();
-//		for (Customer customer : customers) {
-//			customerNameList.add(customer.getName()+'|'+customer.getSecondaryName());
-//		}
-//		return customerNameList;
 		return customers;
 	}
-
+	public Customer getCustomerByLoan(long loanId) throws Exception {
+		Customer customer = null;
+		connection = openConnection("http://localhost:6080/TM_Service/customer/get", "GET", 
+				"?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8"));
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		customer = mapper.readValue(response.toString(), Customer.class);
+		return customer;
+	}
 	public String addCustomer(Customer customer) throws Exception {
 		String jsonLoad = mapper.writeValueAsString(customer);
 		byte[] postData = jsonLoad.getBytes();

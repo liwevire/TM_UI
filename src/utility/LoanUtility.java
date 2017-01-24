@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.Customer;
 import model.Loan;
 
 public class LoanUtility extends ConnectionUtility{
@@ -44,9 +41,8 @@ public class LoanUtility extends ConnectionUtility{
 				response.append(output);
 			}
 		}
-		System.out.println(response);
 		Loan loan = mapper.readValue(response.toString(), Loan.class);
-		System.out.println(loan.getCustomer().getName());
+		loan.setCustomer(new CustomerUtility().getCustomerByLoan(loanId));
 		return loan;
 	}
 }

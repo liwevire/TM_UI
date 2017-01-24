@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,11 +43,8 @@ public class LoanController {
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/view")
 	public String viewLoan(Model model, @ModelAttribute("editLoanForm") Loan loan) throws Exception {
-//		loan = new Loan(new Customer("Prem", "T", new Date(), "Sethu Road", "PVI", "614804", "8973760106"),new Date(),(double)10);
-		loanUtility.getLoan(loan.getLoanId());
-//		loan.setCustomer(new Customer("Prem", "T", new Date(), "Sethu Road", "PVI", "614804", "8973760106"));
+		loan = loanUtility.getLoan(loan.getLoanId());
 		model.addAttribute("loan", loan);
-		System.out.println(loan.getAmount());
 		return "viewLoanLanding";
 	}
 }
