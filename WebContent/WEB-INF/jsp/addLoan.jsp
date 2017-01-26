@@ -31,7 +31,7 @@
 					<tr><td>Phone:</td><td><form:input id="phone" path="customer.phone"/></td></tr>
 					<tr><td>Amount:</td><td><form:input id="amount" path="amount" type="text"/></td></tr>
 				</table>
-				<table id="addItems">
+				<table id="listItems">
 						<tr><th>Add Items</th></tr>
 						<tr><td>Name</td><td>Weight</td></tr>
 						<tr><td><input name="items[0].name" type="text"/></td><td><input name="items[0].weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
@@ -41,7 +41,7 @@
 		</div>
 		
 		<script type="text/javascript">
-			itemListId = 0;
+			itemListId = 1;
 			$(document).ready(function(){
 				$("#name").autocomplete({
 					source: '${pageContext.request.contextPath}/app/customer/getNameList',
@@ -63,18 +63,18 @@
 				};
 			});
 			function addMoreItem(){
-				itemListId += 1;
 				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
 				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td>";
 				if(itemListId == 1){
 					itemRow+="<td><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\"/></td>";
 				}
 				itemRow+="</tr>";
- 				$("#addItems").append(itemRow);
+				itemListId += 1;
+ 				$("#listItems").append(itemRow);
 			}
 			function removeItem(){
+				itemListId -= 1;
  				$("#moreRow"+itemListId).remove();
- 				itemListId -= 1;
 			}
 			$('#loanDate').datepicker({defaultDate:new Date()});
 			function clearDetails(){
@@ -86,7 +86,6 @@
 				$('#pin').val('');
 				$('#phone').val('');
 			}
-			
 		</script>
 	</body>
 </html>

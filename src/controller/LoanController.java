@@ -45,6 +45,6 @@ public class LoanController {
 	public String viewLoan(Model model, @ModelAttribute("editLoanForm") Loan loan) throws Exception {
 		loan = loanUtility.getLoan(loan.getLoanId());
 		model.addAttribute("loan", loan);
-		return "viewLoanLanding";
+		return "editLoan";
 	}
 }
