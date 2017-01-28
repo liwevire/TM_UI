@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import model.Customer;
 import model.Loan;
 import utility.LoanUtility;
 
@@ -24,11 +23,17 @@ public class LoanController {
 		return "addLoan";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/add")
-	public String addLoan(@ModelAttribute("addLoanForm") Loan loan, @ModelAttribute("customerForm") Customer customer, final RedirectAttributes redirectAttributes) throws Exception {
+	public String addLoan(@ModelAttribute("addLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
 		String loanId = loanUtility.addLoan(loan);
 		redirectAttributes.addFlashAttribute("loanId",loanId);
-		redirectAttributes.addFlashAttribute("message","Loan added successfully"+loanId);
+		String message= "";
+		if (null != loanId && Integer.parseInt(loanId)!=0) {
+			message = "Loan added successfully. Loan ID: "+loanId;
+		} else {
+			message = "Loan addition failure";
+		}
+		redirectAttributes.addFlashAttribute("message",message);
 		return "redirect:getLoanAdditionStatus";
 	}
 	@ResponseBody
@@ -38,13 +43,23 @@ public class LoanController {
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/view")
 	public String viewLoan(Model model) throws Exception {
-		model.addAttribute("editLoanForm", new Loan());
+		model.addAttribute("viewLoanForm", new Loan());
 		return "viewLoan";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/view")
-	public String viewLoan(Model model, @ModelAttribute("editLoanForm") Loan loan) throws Exception {
+	public String viewLoan(Model model, @ModelAttribute("viewLoanForm") Loan loan) throws Exception {
 		loan = loanUtility.getLoan(loan.getLoanId());
+		System.out.println(loan.getItems());
+		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
 		return "editLoan";
+	}
+	@RequestMapping(method=RequestMethod.POST, value="/update")
+	public String updateLoan(Model model, @ModelAttribute("editLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
+		redirectAttributes.addFlashAttribute("loan", loan);
+		loanUtility.updateLoan(loan);
+		String message= "Update successflully";
+		redirectAttributes.addFlashAttribute("message",message);
+		return "redirect:getLoanAdditionStatus";
 	}
 }

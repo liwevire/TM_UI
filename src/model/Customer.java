@@ -4,10 +4,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Customer{
 	long customerId;
 	String name;
 	String secondaryName;
+	@DateTimeFormat
 	Date date;
 	String address;
 	String post;

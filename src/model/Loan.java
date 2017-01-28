@@ -4,24 +4,34 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Loan{
 	long loanId;
 	Customer customer;
+	@DateTimeFormat
 	Date date;
-	double amount;
+	double principal;
+	double returnAmount;
+	String loanStatus;
 	List<Item> items = new ArrayList<Item>();
 	public Loan() {		super();	}
-	public Loan(Customer customer, Date date, double amount) {
+	public Loan(Customer customer, Date date, double principal, double returnAmount, String loanStatus) {
 		super();
 		this.customer = customer;
 		this.date = date;
-		this.amount = amount;
+		this.principal = principal;
+		this.returnAmount = returnAmount;
+		this.loanStatus = loanStatus;
 	}
-	public Loan(Customer customer, Date date, double amount, List<Item> items) {
+	public Loan(Customer customer, Date date, double principal, double returnAmount, String loanStatus,
+			List<Item> items) {
 		super();
 		this.customer = customer;
 		this.date = date;
-		this.amount = amount;
+		this.principal = principal;
+		this.returnAmount = returnAmount;
+		this.loanStatus = loanStatus;
 		this.items = items;
 	}
 	public long getLoanId() {
@@ -42,11 +52,23 @@ public class Loan{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public double getAmount() {
-		return amount;
+	public double getPrincipal() {
+		return principal;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setPrincipal(double principal) {
+		this.principal = principal;
+	}
+	public double getReturnAmount() {
+		return returnAmount;
+	}
+	public void setReturnAmount(double returnAmount) {
+		this.returnAmount = returnAmount;
+	}
+	public String getLoanStatus() {
+		return loanStatus;
+	}
+	public void setLoanStatus(String loanStatus) {
+		this.loanStatus = loanStatus;
 	}
 	public List<Item> getItems() {
 		return items;

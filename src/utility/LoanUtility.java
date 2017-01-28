@@ -45,4 +45,24 @@ public class LoanUtility extends ConnectionUtility{
 		loan.setCustomer(new CustomerUtility().getCustomerByLoan(loanId));
 		return loan;
 	}
+	public String updateLoan(Loan loan) throws Exception {
+		String jsonLoad = mapper.writeValueAsString(loan);
+		byte[] postData = jsonLoad.getBytes();
+		System.out.println(jsonLoad);
+		connection = openConnection("http://localhost:6080/TM_Service/loan/update", "POST",
+				mapper.writeValueAsString(loan));
+		connection.setRequestProperty("Content-Type", "application/json");
+		connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+		try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+			wr.write(postData);
+		}
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		return response.toString();
+	}
 }

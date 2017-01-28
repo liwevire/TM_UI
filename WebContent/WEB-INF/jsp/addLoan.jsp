@@ -6,8 +6,11 @@
 		<title>TM_UI</title>
   		<script src="/TM_UI/resources/js/jquery-3.1.1.min.js"></script>
   		<script src="/TM_UI/resources/js/jquery-ui.min.js"></script>
+		<script src="/TM_UI/resources/js/jquery.datetimepicker.full.min.js"></script>
+		<script src="/TM_UI/resources/js/jquery-dateFormat.min.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery.datetimepicker.min.css" />
 		
 		<style>
 		  .ui-autocomplete-loading {
@@ -29,7 +32,7 @@
 					<tr><td>Post:</td><td><form:input id="post" path="customer.post"/></td></tr>
 					<tr><td>PIN:</td><td><form:input id="pin" path="customer.pin"/></td></tr>
 					<tr><td>Phone:</td><td><form:input id="phone" path="customer.phone"/></td></tr>
-					<tr><td>Amount:</td><td><form:input id="amount" path="amount" type="text"/></td></tr>
+					<tr><td>Principal:</td><td><form:input id="principal" path="principal" type="text"/></td></tr>
 				</table>
 				<table id="listItems">
 						<tr><th>Add Items</th></tr>
@@ -49,7 +52,7 @@
 						$('#name').val(ui.item.name);
 						$('#secondaryName').val(ui.item.secondaryName);
 						$('#customerId').val(ui.item.customerId);
-						$('#customerDate').val(new Date(ui.item.date));
+						$('#customerDate').val($.format.date(new Date(ui.item.date), "MM/dd/yyyy hh:mm a"));
 						$('#address').val(ui.item.address);
 						$('#post').val(ui.item.post);
 						$('#pin').val(ui.item.pin);
@@ -61,6 +64,10 @@
 				        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
 				        .appendTo( ul );
 				};
+				$('#loanDate').datetimepicker();
+				$("#loanDate").on("change", function(e){
+					$("#loanDate").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
+				});
 			});
 			function addMoreItem(){
 				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
@@ -76,11 +83,10 @@
 				itemListId -= 1;
  				$("#moreRow"+itemListId).remove();
 			}
-			$('#loanDate').datepicker({defaultDate:new Date()});
 			function clearDetails(){
 				$('#secondaryName').val('');
 				$('#customerId').val('0');
-				$('#customerDate').val(new Date());
+				$('#customerDate').val($.format.date(new Date(), "MM/dd/yyyy hh:mm a"));
 				$('#address').val('');
 				$('#post').val('');
 				$('#pin').val('');

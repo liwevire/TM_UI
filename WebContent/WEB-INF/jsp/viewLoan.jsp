@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div>
-		<form:form action ="/TM_UI/app/loan/view" method="post" modelAttribute="editLoanForm">
+		<form:form action ="view" method="post" modelAttribute="viewLoanForm">
 			<table>
 				<tr><th>View Loan</th></tr>
 				<tr><td>Loan id:</td><td><form:input id="loanId" path="loanId" type = "number"></form:input></td></tr>
