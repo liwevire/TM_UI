@@ -28,8 +28,8 @@
 				<tr><td>Date:</td><td><form:input id="loanDate" class="editable" path="date" type="text" readonly="true"/></td></tr>
 				<tr><td>Name:</td><td><form:input id="name" class="editable" path="customer.name" onchange="clearDetails()" type="text" readonly="true"/></td></tr>
 				<tr><td>Secondary Name:</td><td><form:input class="editable" id="secondaryName" path="customer.secondaryName" type="text" readonly="true"/></td></tr>
-				<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
-				<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input></td></tr>
+				<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"/></td></tr>
+				<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="true"/></td></tr>
 				<tr><td>Address:</td><td><form:input id="address" class="editable" path="customer.address" type="text" readonly="true"/></td></tr>
 				<tr><td>Post:</td><td><form:input id="post" class="editable" path="customer.post" readonly="true"/></td></tr>
 				<tr><td>PIN:</td><td><form:input id="pin" class="editable" path="customer.pin" readonly="true"/></td></tr>
@@ -58,71 +58,35 @@
 					</tr>
 					<c:set var="itemListId" value="${itemListId+1}"></c:set>
 				</c:forEach>
-			</table><br>
-			<input id="formSubmit" type="submit" value="Submit" disabled hidden="true"/><input id="formReset" type="reset" value="Reset" disabled hidden="true"/>
+			</table>
+			<table id="returnEntry">
+				<tr><th>Loan return</th></tr>
+				<tr><td>Return date:</td><td><form:input id="returnDate" path="returnDate" type="text"/></td></tr>
+				<tr>
+					<td>Loan status:</td>
+					<td><form:select id="loanStatus" path="loanStatus" type="checkbox">
+						<form:option value="open">Open</form:option>
+						<form:option value="open">Closed</form:option>
+						<form:option value="open">Re-loan</form:option>
+					</form:select></td>
+				</tr>
+				<tr><td>Return amount:</td><td><form:input id="returnAmount" path="returnAmount" type="text"/></td></tr>
+				<tr><td>Loan comments:</td><td><form:input id="comments" path="comments" type="text"/></td></tr>
+			</table>
+			<input id="formSubmit" type="submit" value="Submit"/><input id="formReset" type="reset" value="Reset"/>
 		</form:form>
-		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/>
 	</div>
 	<script type="text/javascript">
 		itemListId = +"${itemListId}";
 		$(document).ready(function(){
-			$("#name").autocomplete({
-				source: '${pageContext.request.contextPath}/app/customer/getNameList',
-				select: function(event, ui) {
-					$('#name').val(ui.item.name);
-					$('#secondaryName').val(ui.item.secondaryName);
-					$('#customerId').val(ui.item.customerId);
-					$('#customerDate').val($.format.date(new Date(ui.item.date), "MM/dd/yyyy hh:mm a"));
-					$('#address').val(ui.item.address);
-					$('#post').val(ui.item.post);
-					$('#pin').val(ui.item.pin);
-					$('#phone').val(ui.item.phone);
-					return false;
-				}
-			}).autocomplete( "instance" )._renderItem = function( ul, item ) {
-			      return $( "<li>" )
-			        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
-			        .appendTo( ul );
-			};
-			removeButton='';			
-			if(${itemListId} > 0){
-				removeButton+="<td><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\" disabled/></td>";
-			}
-			$("#moreRow1").append(removeButton);
+			$("#returnDate").on("change", function(e){
+				$("#returnDate").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
+			});
 			$("#loanDate").on("change", function(e){
 				$("#loanDate").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
 			});
 		});
-		function addMoreItem(){
-			itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
-			itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td>";
-			if(itemListId == 1){
-				itemRow+="<td><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\"/></td>";
-			}
-			itemRow+="</tr>";
-			itemListId += 1;
-			$("#listItems").append(itemRow);
-		}
-		function removeItem(){
-			itemListId -= 1;
-			$("#moreRow"+itemListId).remove();
-		}
-		function clearDetails(){
-			$('#secondaryName').val('');
-			$('#customerId').val('0');
-			$('#customerDate').val($.format.date(new Date(), "MM/dd/yyyy hh:mm a"));
-			$('#address').val('');
-			$('#post').val('');
-			$('#pin').val('');
-			$('#phone').val('');
-		}
-		function enableEdit() {
-			$(".editable").removeAttr("readonly");
-			$("input[disabled]").removeAttr("disabled");
-			$("input[hidden]").removeAttr("hidden");
-			$("#enableEdit").remove();
-			$('#loanDate').datetimepicker();
-		}
+		$('#returnDate').datetimepicker();
 	</script>
 </body>
 </html>

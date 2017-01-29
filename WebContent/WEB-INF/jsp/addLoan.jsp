@@ -39,7 +39,7 @@
 						<tr><td>Name</td><td>Weight</td></tr>
 						<tr><td><input name="items[0].name" type="text"/></td><td><input name="items[0].weight" type="text"/></td><td><input type="button" onclick="addMoreItem()" value="Add more items"/></td></tr>
 				</table>
-				<input id="formSubmit" type="submit" value="Submit"/>
+				<input id="formSubmit" type="submit" value="Submit"/><input id="formReset" type="reset" value="Reset"/>
 			</form:form>
 		</div>
 		
