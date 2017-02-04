@@ -6,17 +6,6 @@ public class Item{
 	String name;
 	double weight;
 	public Item() {		super();	}
-	public Item(String name, double weight) {
-		super();
-		this.name = name;
-		this.weight = weight;
-	}
-	public Item(Loan loan, String name, double weight) {
-		super();
-		this.loan = loan;
-		this.name = name;
-		this.weight = weight;
-	}
 	public long getItemId() {
 		return itemId;
 	}

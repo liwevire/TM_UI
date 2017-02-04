@@ -23,7 +23,7 @@
 			<form:form modelAttribute="addLoanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
-					<tr><td>Date:</td><td><form:input id="loanDate" path="date" type="text"/></td></tr>
+<%-- 					<tr><td>Date:</td><td><form:input id="loanDate" path="date" type="text"/></td></tr> --%>
 					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onchange="clearDetails()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text"/></td></tr>
 					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
@@ -32,7 +32,20 @@
 					<tr><td>Post:</td><td><form:input id="post" path="customer.post"/></td></tr>
 					<tr><td>PIN:</td><td><form:input id="pin" path="customer.pin"/></td></tr>
 					<tr><td>Phone:</td><td><form:input id="phone" path="customer.phone"/></td></tr>
-					<tr><td>Principal:</td><td><form:input id="principal" path="principal" type="text"/></td></tr>
+<%-- 					<tr><td>Principal:</td><td><form:input id="principal" path="principal" type="text"/></td></tr> --%>
+				</table>
+				<table>
+					<tr><th>Transaction Details</th></tr>
+					<tr>
+						<td>Date:</td><td><form:input id="loanDate" class="date" path="transactions[0].date" type="text" onchange="setInterestDate()"/></td>
+						<td>Category:</td><td><form:input path="transactions[0].category" type="text" value="principal" hidden="true"/></td>
+						<td>Amount:</td><td><form:input id="principalAmount" path="transactions[0].Amount" type="text" value="0" onchange="calculateInterest()"/></td>
+					</tr>
+					<tr>
+						<td>Date:</td><td><form:input id="interestDate" path="transactions[1].date" type="text" readonly="true"/></td>
+						<td>Category:</td><td><form:input path="transactions[1].category" type="text" value="return_on_interest" hidden="true"/></td>
+						<td>Amount:</td><td><form:input id="interestAmount" path="transactions[1].Amount" type="text" value="0" readonly="true"/></td>
+					</tr>
 				</table>
 				<table id="listItems">
 						<tr><th>Add Items</th></tr>
@@ -64,11 +77,19 @@
 				        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
 				        .appendTo( ul );
 				};
-				$('#loanDate').datetimepicker();
-				$("#loanDate").on("change", function(e){
-					$("#loanDate").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
+				$('.date').datetimepicker();
+				$(".date").on("change", function(e){
+					$(".date").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
 				});
 			});
+			function setInterestDate(){
+				$("#interestDate").val($("#loanDate").val());
+			}
+			function calculateInterest(){
+				var principal = $("#principalAmount").val();
+				var interest = (principal*.03)+5;
+				$("#interestAmount").val(interest);
+			}
 			function addMoreItem(){
 				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
 				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td>";
