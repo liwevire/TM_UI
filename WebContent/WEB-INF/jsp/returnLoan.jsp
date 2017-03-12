@@ -25,7 +25,7 @@
 			<table>
 				<tr><th>Edit Loan</th></tr>
 				<tr><td>Loan Id:</td><td><form:input id="loanId" path="loanId" type="text" readonly="true"/></td></tr>
-				<tr><td>Date:</td><td><form:input id="loanDate" class="editable" path="date" type="text" readonly="true"/></td></tr>
+<%-- 				<tr><td>Date:</td><td><form:input id="loanDate" class="editable" path="date" type="text" readonly="true"/></td></tr> --%>
 				<tr><td>Name:</td><td><form:input id="name" class="editable" path="customer.name" onchange="clearDetails()" type="text" readonly="true"/></td></tr>
 				<tr><td>Secondary Name:</td><td><form:input class="editable" id="secondaryName" path="customer.secondaryName" type="text" readonly="true"/></td></tr>
 				<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"/></td></tr>

@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import model.Loan;
+import model.Transaction;
 import utility.LoanUtility;
 
 @EnableWebMvc
@@ -60,8 +64,38 @@ public class LoanController {
 	public String updateLoan(Model model, @ModelAttribute("editLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
 		loanUtility.updateLoan(loan);
-		String message= "Updated successflully";
+		for (Transaction transaction:loan.getTransactions()) {
+			System.out.println(transaction.getDate());
+		}
+		String message= "Updated successfully";
 		redirectAttributes.addFlashAttribute("message",message);
 		return "redirect:getLoanAdditionStatus";
+	}
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.POST, value="/calculateInitialInterest")
+	public double calculateInitialInterest(@ModelAttribute("principal") double principal){
+		if(principal > 0 &&principal < 5000)
+			return (double)((principal*0.03)+5);
+		else if (principal > 5000 &&principal < 10000)
+			return (double)((principal*0.02)+10);
+		else
+			return (double)(0);
+	}
+	@ResponseBody
+	@RequestMapping(method=RequestMethod.POST, value="/getInterestRates")
+	public List<Double> getInterestRates(@ModelAttribute("principal") double principal){
+		List<Double> interestRates= new ArrayList<Double>();
+		if(principal > 0 &&principal < 5000) {
+			interestRates.add(.03);
+			interestRates.add((double)5);
+			return interestRates;
+		}
+		else if (principal > 5000 && principal < 10000) {
+			interestRates.add(.02);
+			interestRates.add((double)10);
+			return interestRates;
+		}
+		else
+			return null;
 	}
 }

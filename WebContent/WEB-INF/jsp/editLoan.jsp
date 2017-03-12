@@ -25,7 +25,6 @@
 			<table>
 				<tr><th>Edit Loan</th></tr>
 				<tr><td>Loan Id:</td><td><form:input id="loanId" path="loanId" type="text" readonly="true"/></td></tr>
-<%-- 				<tr><td>Date:</td><td><form:input id="loanDate" class="editable" path="date" type="text" readonly="true"/></td></tr> --%>
 				<tr><td>Name:</td><td><form:input id="name" class="editable" path="customer.name" onchange="clearDetails()" type="text" readonly="true"/></td></tr>
 				<tr><td>Secondary Name:</td><td><form:input class="editable" id="secondaryName" path="customer.secondaryName" type="text" readonly="true"/></td></tr>
 				<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
@@ -34,7 +33,6 @@
 				<tr><td>Post:</td><td><form:input id="post" class="editable" path="customer.post" readonly="true"/></td></tr>
 				<tr><td>PIN:</td><td><form:input id="pin" class="editable" path="customer.pin" readonly="true"/></td></tr>
 				<tr><td>Phone:</td><td><form:input id="phone" class="editable" path="customer.phone" readonly="true"/></td></tr>
-<%-- 				<tr><td>Principal:</td><td><form:input id="principal" class="editable" path="principal" type="text" readonly="true"/></td></tr> --%>
 			</table>
 			<table id="listTransactions">
 				<tr><th>Transactions</th></tr>
@@ -43,21 +41,20 @@
 				<c:forEach items="${loan.transactions}" var="transaction">
 					<tr id="moreTransactionRow${transactionListId}">
 						<td>
-							<input class="date editable" 
-								<c:if test="${transactionListId eq 0}">id="loanDate"</c:if>
-								<c:if test="${transactionListId eq 1}">id="interestDate"</c:if>	
-								name="transaction[${transactionListId}].date" type="text" value="${transaction.date}" readonly="readonly">
+							<input  
+								<c:if test="${transactionListId ne 1}">class="date editable"</c:if>
+								<c:if test="${transactionListId eq 1}">class="date" </c:if>
+								id="date${transactionListId}" name="transactions[${transactionListId}].date" type="text" value="${transaction.date}" readonly="readonly">
 						</td>
 						<td>
 							<input 
 								<c:if test="${transactionListId le 1}">readonly="true"</c:if>
-								name="transaction[${transactionListId}].category" type="text" value="${transaction.category}">
+								id="category${transactionListId}" name="transactions[${transactionListId}].category" type="text" value="${transaction.category}">
 						</td>
 						<td>
 							<input class="editable"
-								<c:if test="${transactionListId eq 0}">onchange="calculateInterest()" id="principalAmount"</c:if>
-								<c:if test="${transactionListId eq 1}">onchange="calculateInterest()" id="interestAmount"</c:if>
-								name="transaction[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly"></td>
+								onchange="calculateInitialInterest()" id="transaction${transactionListId}"
+								name="transactions[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly"></td>
 						<c:if test="${transactionListId eq 0}">
 							<td><input type="button" onclick="addMoreTransactionItem()" value="Add more items" disabled/></td>
 						</c:if>
@@ -68,6 +65,7 @@
 					<c:set var="transactionListId" value="${transactionListId+1}"></c:set>
 				</c:forEach>
 			</table>
+			<div id=outstanding></div>
 			<table id="listItems">
 				<tr><th>Add Items</th></tr>
 				<tr><td>Name</td><td>Weight</td></tr>
@@ -91,13 +89,18 @@
 					<c:set var="itemListId" value="${itemListId+1}"></c:set>
 				</c:forEach>
 			</table><br>
-			<input id="formSubmit" type="submit" value="Submit" disabled hidden="true"/><input id="formReset" type="reset" value="Reset" disabled hidden="true"/>
+			<input id="formSubmit" type="submit" value="Submit" hidden="true"/><input id="formReset" type="reset" value="Reset" hidden="true"/>
 		</form:form>
-		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/>
+<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
 	</div>
 	<script type="text/javascript">
-		itemListId = +"${itemListId}";
-		transactionListId = +"${transactionListId}";
+		var credit=0;
+		var interest=0;
+		var principal=0;	
+		var roi;
+		var serviceCharge;
+		var itemListId = +"${itemListId}";
+		var transactionListId = +"${transactionListId}";
 		$(document).ready(function(){
 			$("#name").autocomplete({
 				source: '${pageContext.request.contextPath}/app/customer/getNameList',
@@ -122,12 +125,11 @@
 				removeButton+="<td><input type=\"button\" onclick=\"removeListItem()\" value=\"Remove item\" disabled/></td>";
 			}
 			$("#moreItemRow1").append(removeButton);
-			$(".date").on("change", function(e){
-				$(".date").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
+			$("#date0").on("change", function(e){
+				$("#date1").val($("#date0").val());
 			});
-			$("#loanDate").on("change", function(e){
-				$("#interestDate").val($("#loanDate").val());
-			});
+			enableEdit();
+			calculateOutstanding();
 		});
 		function addMoreListItem(){
 			itemRow="<tr id = \"moreItemRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
@@ -139,26 +141,101 @@
 			itemListId += 1;
 			$("#listItems").append(itemRow);
 		}
-		function calculateInterest(){
-			var principal = $("#principalAmount").val();
-			var interest = (principal*.03)+5;
-			$("#interestAmount").val(interest);
-			alert($("#principalAmount").val());
-			alert($("#interestAmount").val());
+		function calculateInitialInterest(){
+			$.ajax({
+				  method: "POST",
+				  url: "/TM_UI/app/loan/calculateInitialInterest",
+				  data: { principal: $("#transaction0").val() }
+				})
+				  .done(function( initialInterest ) {
+					  $("#transaction1").val(initialInterest);
+				  });
+		}
+		function calculateOutstanding(){
+			$.ajax({
+				  method: "POST",
+				  url: "/TM_UI/app/loan/getInterestRates",
+				  data: { principal: $("#transaction0").val() }
+				})
+				  .done(function( interestRates ) {
+					  if(interestRates != null)
+					  	roi = interestRates[0];
+					  	serviceCharge = interestRates[1];
+					  	outstandings= "<b> Interest rate: </b>"+roi+"<b> Charge: </b>"+serviceCharge;
+					  	outstandings+= "<b> Outstanding Interest amount: </b>"+roi;
+					  	outstandings+= "<b> Outstanding Interest amount: </b>"+roi;
+					  	calculateInterest(transactionListId,$("#transaction0").val(),roi);
+				  });
+		}
+		function calculateInterest(transactionListId,principal,roi){
+			dates=[];
+			categories=[];
+			transactions=[];
+			outstanding=parseInt(0);
+			debit=parseInt(0);
+			credit=parseInt(0);
+			interest=parseInt(0);
+			principal=parseInt(0);
+			startDate=null;
+			endDate=null;
+			for(i = 0; i<transactionListId; i++){
+				dates.push($('#date'+i).val());
+				categories.push($('#category'+i).val());
+				transactions.push($('#transaction'+i).val());
+// 				seggregation plus calculation
+				if(categories[i]=="principal"){
+					principal+=parseInt(transactions[i]);
+					debit+=parseInt(transactions[i]);
+					startDate=new Date(dates[i]);
+				}
+				else if(categories[i]=="return_on_interest"){
+					credit+=parseInt(transactions[i]);
+				}
+				else if(categories[i]=="return_on_principal"){
+					interest+= parseInt(principal*roi*calculateMonths(new Date(startDate), new Date(dates[i])));
+					credit+=parseInt(transactions[i]);
+					startDate=dates[i];
+					principal-=parseInt(transactions[i]);
+				}
+			}
+			monthDiff=calculateMonths(new Date(startDate), new Date());
+			interest+= principal*roi*monthDiff;
+			outstanding = debit+interest-credit;
+			var calculatedValues=' <b>Current Principal:</b> '+principal;
+			calculatedValues+=' <b>Months:</b> '+monthDiff;
+			calculatedValues+=' <b>Interest:</b> '+interest;
+			calculatedValues+=' <b>Outstanding:</b> '+outstanding;
+			$('#outstanding').append(calculatedValues);
+		}
+		function calculateMonths(startDate, endDate){
+			startYear = startDate.getFullYear();
+			startMonth = startDate.getMonth();
+			startDay = startDate.getDate();
+			endYear = endDate.getFullYear();
+			endMonth = endDate.getMonth();
+			endDay = endDate.getDate();
+			monthDiff = 12*(Math.floor(endYear-startYear));
+			monthDiff += Math.floor(endMonth-startMonth);
+			temp= Math.abs(endDay-startDay);
+			temp=temp/15;
+			temp=Math.ceil(temp);
+			temp=temp/2;
+			monthDiff += (Math.ceil(Math.abs(endDay-startDay)/15))/2;
+			return monthDiff;
 		}
 		function removeListItem(){
 			itemListId -= 1;
 			$("#moreItemRow"+itemListId).remove();
 		}
 		function addMoreTransactionItem(){
-			transactionRow="<tr id = \"moreTransactionRow"+transactionListId+"\"><td><input class=\"date\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></td>";
+			transactionRow="<tr id = \"moreTransactionRow"+transactionListId+"\"><td><input class=\"click\" onclick=\"$(this).datetimepicker({format:'m/d/Y h:i A'});\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></td>";
 			transactionRow+="<td><input name=\"transactions["+transactionListId+"].category\" type=\"text\"/></td>";
 			transactionRow+="<td><input name=\"transactions["+transactionListId+"].amount\" type=\"text\"/></td>";
 			transactionRow+="</tr>";
 			transactionListId += 1;
 			$("#listTransactions").append(transactionRow);
+			$(".click").click();
 			if(transactionListId == 3){
-				alert("remove attribute");
 				$("#removeTransactionItem").removeAttr("disabled");
 			}
 		}
@@ -166,7 +243,6 @@
 			transactionListId -= 1;
 			$("#moreTransactionRow"+transactionListId).remove();
 			if(transactionListId<3){
-				alert("add attribute");
 				$("#removeTransactionItem").attr("disabled", "disabled");
 			}
 		}
@@ -180,12 +256,15 @@
 			$('#phone').val('');
 		}
 		function enableEdit() {
-			$('.date').datetimepicker();
+			$('.date').val($.format.date($('.date').val(), "MM/dd/yyyy hh:mm a"));
+			$('.date').datetimepicker({format:'m/d/Y h:i A'});
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");
 			$("input[hidden]").removeAttr("hidden");
 			$("#enableEdit").remove();
-			$('#loanDate').datetimepicker();
+			if(transactionListId == 2){
+				$("#removeTransactionItem").attr("disabled", "disabled");
+			}
 		}
 	</script>
 </body>

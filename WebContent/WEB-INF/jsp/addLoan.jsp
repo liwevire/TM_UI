@@ -23,8 +23,7 @@
 			<form:form modelAttribute="addLoanForm">
 				<table>
 					<tr><th>Add Loan</th></tr>
-<%-- 					<tr><td>Date:</td><td><form:input id="loanDate" path="date" type="text"/></td></tr> --%>
-					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onchange="clearDetails()"/></td></tr>
+					<tr><td>Name:</td><td><form:input id="name" path="customer.name" type="text" onfocus="clearDetails()"/></td></tr>
 					<tr><td>Secondary Name:</td><td><form:input id="secondaryName" path="customer.secondaryName" type="text"/></td></tr>
 					<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
 					<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input></td></tr>
@@ -35,11 +34,11 @@
 <%-- 					<tr><td>Principal:</td><td><form:input id="principal" path="principal" type="text"/></td></tr> --%>
 				</table>
 				<table>
-					<tr><th>Transaction Details</th></tr>
+					<tr><th>Transactions</th></tr>
 					<tr>
 						<td>Date:</td><td><form:input id="loanDate" class="date" path="transactions[0].date" type="text" onchange="setInterestDate()"/></td>
 						<td>Category:</td><td><form:input path="transactions[0].category" type="text" value="principal" hidden="true"/></td>
-						<td>Amount:</td><td><form:input id="principalAmount" path="transactions[0].Amount" type="text" value="0" onchange="calculateInterest()"/></td>
+						<td>Amount:</td><td><form:input id="principalAmount" path="transactions[0].Amount" type="text" value="0" onchange="calculateInitialInterest()"/></td>
 					</tr>
 					<tr>
 						<td>Date:</td><td><form:input id="interestDate" path="transactions[1].date" type="text" readonly="true"/></td>
@@ -77,18 +76,20 @@
 				        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
 				        .appendTo( ul );
 				};
-				$('.date').datetimepicker();
-				$(".date").on("change", function(e){
-					$(".date").data('xdsoft_datetimepicker').setOptions({format:'m/d/Y h:i A'});
-				});
+				$('.date').datetimepicker({format:'m/d/Y h:i A'});
 			});
 			function setInterestDate(){
 				$("#interestDate").val($("#loanDate").val());
 			}
-			function calculateInterest(){
-				var principal = $("#principalAmount").val();
-				var interest = (principal*.03)+5;
-				$("#interestAmount").val(interest);
+			function calculateInitialInterest(){
+				$.ajax({
+					  method: "POST",
+					  url: "/TM_UI/app/loan/calculateInitialInterest",
+					  data: { principal: $("#principalAmount").val() }
+					})
+					  .done(function( interest ) {
+						  $("#interestAmount").val(interest);
+					  });
 			}
 			function addMoreItem(){
 				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
