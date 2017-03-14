@@ -52,12 +52,10 @@ public class LoanController {
 		return "viewLoan";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/view")
-	public String viewLoan(Model model, @RequestParam("loanId") Long loanId, @RequestParam("action") String action) throws Exception {
+	public String viewLoan(Model model, @RequestParam("loanId") Long loanId) throws Exception {
 		Loan loan = loanUtility.getLoan(loanId);
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
-		if(action != null && action.equalsIgnoreCase("return"))
-			return "returnLoan";
 		return "editLoan";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/update")
@@ -85,17 +83,15 @@ public class LoanController {
 	@RequestMapping(method=RequestMethod.POST, value="/getInterestRates")
 	public List<Double> getInterestRates(@ModelAttribute("principal") double principal){
 		List<Double> interestRates= new ArrayList<Double>();
-		if(principal > 0 &&principal < 5000) {
+		if(principal > 0 &&principal < 5000) 
 			interestRates.add(.03);
-			interestRates.add((double)5);
-			return interestRates;
-		}
-		else if (principal > 5000 && principal < 10000) {
+		else if (principal >= 5000 && principal < 10000)
+			interestRates.add(.025);
+		else if (principal >= 10000)
 			interestRates.add(.02);
-			interestRates.add((double)10);
-			return interestRates;
-		}
 		else
 			return null;
+		interestRates.add((double)5);
+		return interestRates;
 	}
 }
