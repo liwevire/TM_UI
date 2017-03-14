@@ -66,6 +66,11 @@
 				</c:forEach>
 			</table>
 			<div id=outstanding></div>
+			<div><form:select path="loanStatus" onchange='alert(\'NOTE: The loan status is changed to \'+$(this).val())'>
+				<form:option value="open" label="Open"/>
+				<form:option value="closed" label="Closed"/>
+			</form:select></div>
+			<br>
 			<table id="listItems">
 				<tr><th>Add Items</th></tr>
 				<tr><td>Name</td><td>Weight</td></tr>
@@ -94,13 +99,14 @@
 <!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
 	</div>
 	<script type="text/javascript">
+		var loanStatus='${loan.loanStatus}';
 		var credit=0;
 		var interest=0;
 		var principal=0;	
 		var roi;
 		var serviceCharge;
-		var itemListId = +"${itemListId}";
-		var transactionListId = +"${transactionListId}";
+		var itemListId = +${itemListId};
+		var transactionListId = +${transactionListId};
 		$(document).ready(function(){
 			$("#name").autocomplete({
 				source: '${pageContext.request.contextPath}/app/customer/getNameList',
@@ -161,20 +167,19 @@
 					  if(interestRates != null)
 					  	roi = interestRates[0];
 					  	serviceCharge = interestRates[1];
-					  	outstandings= "<b> Interest rate: </b>"+roi+"<b> Charge: </b>"+serviceCharge;
-					  	outstandings+= "<b> Outstanding Interest amount: </b>"+roi;
-					  	outstandings+= "<b> Outstanding Interest amount: </b>"+roi;
-					  	calculateInterest(transactionListId,$("#transaction0").val(),roi);
+					  	printOutstanding(transactionListId,$("#transaction0").val(),roi,serviceCharge);
 				  });
 		}
-		function calculateInterest(transactionListId,principal,roi){
+		function printOutstanding(transactionListId,principal,roi,serviceCharge){
 			dates=[];
 			categories=[];
 			transactions=[];
 			outstanding=parseInt(0);
 			debit=parseInt(0);
-			credit=parseInt(0);
-			interest=parseInt(0);
+			creditOnInterest=parseInt(0);
+			creditOnPrincipal=parseInt(0);
+			outstandingInterest = parseInt(0);
+			totalInterest = parseInt(serviceCharge);
 			principal=parseInt(0);
 			startDate=null;
 			endDate=null;
@@ -182,29 +187,39 @@
 				dates.push($('#date'+i).val());
 				categories.push($('#category'+i).val());
 				transactions.push($('#transaction'+i).val());
-// 				seggregation plus calculation
+				//seggregation plus calculation
 				if(categories[i]=="principal"){
 					principal+=parseInt(transactions[i]);
 					debit+=parseInt(transactions[i]);
 					startDate=new Date(dates[i]);
 				}
 				else if(categories[i]=="return_on_interest"){
-					credit+=parseInt(transactions[i]);
+					//TODO: check if it is for first month. alternate implemented if it is credit on principal or on interest
+					creditOnInterest+=parseInt(transactions[i]);
 				}
 				else if(categories[i]=="return_on_principal"){
-					interest+= parseInt(principal*roi*calculateMonths(new Date(startDate), new Date(dates[i])));
-					credit+=parseInt(transactions[i]);
+					//TODO: check if it is less than a month. working without this TODO 
+					totalInterest+= parseInt(principal*roi*calculateMonths(new Date(startDate), new Date(dates[i])));
+					creditOnPrincipal+=parseInt(transactions[i]);
 					startDate=dates[i];
 					principal-=parseInt(transactions[i]);
 				}
 			}
 			monthDiff=calculateMonths(new Date(startDate), new Date());
-			interest+= principal*roi*monthDiff;
-			outstanding = debit+interest-credit;
-			var calculatedValues=' <b>Current Principal:</b> '+principal;
-			calculatedValues+=' <b>Months:</b> '+monthDiff;
-			calculatedValues+=' <b>Interest:</b> '+interest;
-			calculatedValues+=' <b>Outstanding:</b> '+outstanding;
+			totalInterest+= principal*roi*monthDiff;
+			outstandingInterest=totalInterest-creditOnInterest;
+			outstanding = debit+outstandingInterest-creditOnPrincipal;
+			var calculatedValues='<br><b> Totals</b><br>';
+			calculatedValues+=' Total Interest: '+totalInterest;
+			//change month appropriately like for a returned loan
+			if(loanStatus=='open')
+				calculatedValues+=' Months: '+calculateMonths(new Date(dates[0]), new Date());
+			if(loanStatus=='closed')
+				calculatedValues+=' Months: '+calculateMonths(new Date(dates[0]), new Date(dates[dates.length-1]));
+			calculatedValues+='<br><b> Outstandings</b><br>';
+			calculatedValues+=' Outstanding Principal: '+principal;
+			calculatedValues+=' Outstanding Interest: '+outstandingInterest;
+			calculatedValues+=' Total Outstanding: '+outstanding;
 			$('#outstanding').append(calculatedValues);
 		}
 		function calculateMonths(startDate, endDate){
@@ -256,7 +271,8 @@
 			$('#phone').val('');
 		}
 		function enableEdit() {
-			$('.date').val($.format.date($('.date').val(), "MM/dd/yyyy hh:mm a"));
+			$('.date').val(function(i, oldVal) {
+			    return $.format.date(oldVal, "MM/dd/yyyy hh:mm a")});
 			$('.date').datetimepicker({format:'m/d/Y h:i A'});
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");

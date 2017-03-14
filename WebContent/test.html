@@ -1,10 +1,18 @@
 <html>
-	<head>
-		<title>TM_UI</title>
-	</head>
-	<body>
-		<div>
-			<button>test</button>
-		</div>
-	</body>
+<head>
+<title>Test</title>
+<script src="/TM_UI/resources/js/jquery-3.1.1.min.js"></script>
+<script src="/TM_UI/resources/js/jquery-dateFormat.min.js"></script>
+</head>
+<body>
+	<div>
+		Holder 1:<input class="date1" type="text" value="Mon Feb 06 00:30:00 IST 2017"><br>
+		Holder 2:<input class="date" type="text" value="Sun Mar 12 11:06:00 IST 2017">
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.date').val($.format.date($('.date').val(), "MM/dd/yyyy hh:mm a"));
+		});
+	</script>
+</body>
 </html>
