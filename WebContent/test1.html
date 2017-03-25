@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/TM_UI/resources/js/jquery-dateFormat.min.js"></script>
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  </head>
+  <body>
+    <p>Date: <input class='date' type="text" id="datepicker" value="Mon Jan 16 00:03:00 IST 2017"></p>
+    <script type="text/javascript">
+    $(document).ready(function(){
+   		$( "#datepicker" ).datepicker();
+		$('.date').datepicker( "option", "dateFormat","dd-mm-yy" );
+    })
+    </script>
+  </body>
+</html>
+
+
+

@@ -3,11 +3,13 @@ package utility;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Loan;
+import model.Outstanding;
 
 public class LoanUtility extends ConnectionUtility{
 	ObjectMapper mapper = new ObjectMapper();
@@ -64,5 +66,18 @@ public class LoanUtility extends ConnectionUtility{
 			}
 		}
 		return response.toString();
+	}
+	public Outstanding getOutstanding(Long loanId) throws Exception {
+		String query = "?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8");
+		connection = openConnection("http://localhost:6080/TM_Service/loan/getOutstanding", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		Outstanding outstanding = mapper.readValue(response.toString(), Outstanding.class);
+		return outstanding;
 	}
 }

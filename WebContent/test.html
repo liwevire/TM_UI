@@ -3,16 +3,25 @@
 <title>Test</title>
 <script src="/TM_UI/resources/js/jquery-3.1.1.min.js"></script>
 <script src="/TM_UI/resources/js/jquery-dateFormat.min.js"></script>
+
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-	<div>
-		Holder 1:<input class="date1" type="text" value="Mon Feb 06 00:30:00 IST 2017"><br>
-		Holder 2:<input class="date" type="text" value="Sun Mar 12 11:06:00 IST 2017">
-	</div>
+	<form action ="/TM_UI/app/loan/checkDate" method="post">
+		<input class="test1" type="text" name="date">
+		<button type="submit">Submit</button>
+	</form>
+<!-- 	<div> -->
+<!-- 		Holder 1:<input class="date1" type="date" value="Mon Feb 06 00:30:00 IST 2017"><br> -->
+<!-- 		Holder 2:<input class="date" type="text" value="Sun Mar 12 11:06:00 IST 2017"> -->
+<!-- 	</div> -->
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.date').val($.format.date($('.date').val(), "MM/dd/yyyy hh:mm a"));
-		});
-	</script>
+			$('.test1').datepicker();
+// 			$('.test1').datepicker( "option", "showAnim", 'fold');
+		}); 
+	</script> 
 </body>
 </html>

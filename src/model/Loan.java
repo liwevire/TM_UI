@@ -7,7 +7,7 @@ public class Loan{
 	long loanId;
 	Customer customer;
 	String loanStatus;
-	double rateOfInterest;
+	double weight;
 	String comments;
 	List<Item> items = new ArrayList<Item>();
 	List<Transaction> transactions= new ArrayList<Transaction>();
@@ -30,11 +30,11 @@ public class Loan{
 	public void setLoanStatus(String loanStatus) {
 		this.loanStatus = loanStatus;
 	}
-	public double getRateOfInterest() {
-		return rateOfInterest;
+	public double getWeight() {
+		return weight;
 	}
-	public void setRateOfInterest(double rateOfInterest) {
-		this.rateOfInterest = rateOfInterest;
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 	public List<Item> getItems() {
 		return items;

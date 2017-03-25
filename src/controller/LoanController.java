@@ -1,6 +1,9 @@
 package controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import model.Loan;
+import model.Outstanding;
 import model.Transaction;
 import utility.LoanUtility;
 
@@ -54,8 +58,10 @@ public class LoanController {
 	@RequestMapping(method=RequestMethod.GET, value="/view")
 	public String viewLoan(Model model, @RequestParam("loanId") Long loanId) throws Exception {
 		Loan loan = loanUtility.getLoan(loanId);
+		Outstanding outstanding = loanUtility.getOutstanding(loanId);
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
+		model.addAttribute("outstanding", outstanding);
 		return "editLoan";
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/update")
@@ -72,12 +78,14 @@ public class LoanController {
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/calculateInitialInterest")
 	public double calculateInitialInterest(@ModelAttribute("principal") double principal){
-		if(principal > 0 &&principal < 5000)
-			return (double)((principal*0.03)+5);
-		else if (principal > 5000 &&principal < 10000)
-			return (double)((principal*0.02)+10);
+		if(principal > 0 &&principal < 5000) 
+			return (double)((principal*0.03));
+		else if (principal >= 5000 && principal < 10000)
+			return (double)((principal*0.025));
+		else if (principal >= 10000)
+			return (double)((principal*0.02));
 		else
-			return (double)(0);
+			return 0;
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/getInterestRates")

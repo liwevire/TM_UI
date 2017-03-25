@@ -6,16 +6,12 @@
 		<title>TM_UI</title>
   		<script type="text/javascript" src="/TM_UI/resources/js/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="/TM_UI/resources/js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="/TM_UI/resources/js/jquery.datetimepicker.full.min.js" defer></script>
+<!-- 		<script type="text/javascript" src="/TM_UI/resources/js/jquery.datetimepicker.full.min.js" defer></script> -->
 		<script type="text/javascript" src="/TM_UI/resources/js/jquery-dateFormat.min.js" defer></script> 
-		<script type="text/javascript" src="/TM_UI/resources/js/materialize.min.js" defer></script>
 		
-		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery-ui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery.datetimepicker.min.css" />
-		
-      	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      	<link type="text/css" rel="stylesheet" href="/TM_UI/resources/css/materialize.min.css"  media="screen,projection"/>
-		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery-ui.min.css"/> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/TM_UI/resources/js/jquery.datetimepicker.min.css" /> -->
 		<style>
 		  .ui-autocomplete-loading {
 		    background: white url("/TM_UI/resources/images/ui-anim_basic_16x16.gif") right center no-repeat;
@@ -23,64 +19,42 @@
 		</style>
 	</head>
 	<body style="overflow: hidden; width: 565px;">
-		<header>
-			<div class="navbar-fixed">
-			<nav>
-				<div class="nav-wrapper">
-					<a href="#" id="hamburger-menu-button" data-activates="sideBar" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>						
-					<a href="/TM_UI/app/home" class="brand-logo center">TM</a>
+		<form:form modelAttribute="addLoanForm">
+				<h5>Add Loan</h5>
+				<b>Customer details</b>
+				<div><form:input id="name" path="customer.name" type="text" class='autocomplete' onfocus="clearDetails()"/> First Name </div>
+				<div><form:input id="secondaryName" path="customer.secondaryName" type="text"/> Secondary Name </div>
+				<div><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input> Customer ID </div>
+				<div><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input> Customer since </div>
+				<div><form:input id="address" path="customer.address" type="text"/> Address </div>
+				<div><form:input id="post" path="customer.post"/> Post </div>
+				<div><form:input id="pin" path="customer.pin"/> PIN </div>
+				<div><form:input id="phone" path="customer.phone"/> Phone </div>
+				<br>
+				<b>Transactions</b>
+				<div><form:input id="loanDate" class="date" path="transactions[0].date" type="text" onchange="setInterestDate()"/> Date </div>
+				<div><form:input id="principalCat" path="transactions[0].category" type="text" value="principal" hidden="true"/> Category </div>
+				<div><form:input id="principalAmount" path="transactions[0].Amount" type="text" value="0" onchange="calculateInitialInterest()"/> Amount </div>
+				<div><form:input id="interestDate" path="transactions[1].date" type="text" readonly="true"/> Date </div>
+				<div><form:input id="interestCat" path="transactions[1].category" type="text" value="first_month_interest" hidden="true"/> Category </div>
+				<div><form:input id="interestAmount" path="transactions[1].Amount" type="text" value="0" readonly="true"/> Amount </div>
+				<div><form:input id="appraisalDate" path="transactions[2].date" type="text" readonly="true"/> Date </div>
+				<div><form:input id="appraisalCat" path="transactions[2].category" type="text" value="appraisal_charges" hidden="true"/> Category </div>
+				<div><form:input id="appraisalAmount" path="transactions[2].Amount" type="text" value="0" readonly="true"/> Amount </div>	
+				<br>
+				<b>Add Items</b>
+				<div id="listItems">
+					<div>Name</div><div>Quantity</div>
+					<div><input name="items[0].name" type="text"/></div>
+					<div><input name="items[0].quantity" type="text"/></div>
+					<div><input type="button" onclick="addMoreItem()" value="Add more items"/></div>
 				</div>
-			</nav>
-			</div>
-			<ul id="sideBar" class="side-nav">
-	        	<li class="bold"><a href="about.html" class="waves-effect waves-teal">About</a></li>
-	        	<li class="bold"><a href="getting-started.html" class="waves-effect waves-teal">Getting Started</a></li>
-	        	<li class="bold"><a href="http://materializecss.com/mobile.html" class="waves-effect waves-teal">Mobile</a></li>
-	        	<li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
-	        	<li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
-			</ul>
-			
-		</header>	
-<!--     ------------------------------------------------------ -->
-		
-		<main><div class='container'>
-		<div class='row '>
-			<form:form modelAttribute="addLoanForm">
-					<h5>Add Loan</h5>
-					
-					<br>
-						<div class='col s12'><b>Customer details</b></div>
-						<div class='input-field col s6'><form:input id="name" path="customer.name" type="text" class='autocomplete' onfocus="clearDetails()"/><label class="active" for="name">First Name</label></div>
-						<div class='input-field col s6'><form:input id="secondaryName" path="customer.secondaryName" type="text"/><label class="active" for="secondaryName">Secondary Name</label></div>
-						<div class='input-field col s6'><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input><label class="active" for="customerId">Customer ID</label></div>
-						<div class='input-field col s6'><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input><label class="active" for="customerDate">Customer since</label></div>
-						<div class='input-field col s12'><form:input id="address" path="customer.address" type="text"/><label class="active" for="address">Address</label></div>
-						<div class='input-field col s6'><form:input id="post" path="customer.post"/><label class="active" for="post">Post</label></div>
-						<div class='input-field col s6'><form:input id="pin" path="customer.pin"/><label class="active" for="pin">PIN</label></div>
-						<div class='input-field col s6'><form:input id="phone" path="customer.phone"/><label class="active" for="phone">Phone</label></div>
-						<br>
-						<div class='col s12'><b>Transactions</b></div>
-						<div class='input-field col s6'><form:input id="loanDate" class="date" path="transactions[0].date" type="text" onchange="setInterestDate()"/><label class="active" for="loanDate">Date</label></div>
-						<div class='input-field col s6'><form:input id="principalCat" path="transactions[0].category" type="text" value="principal" hidden="true"/><label class="active" for="principalCat">Category</label></div>
-						<div class='input-field col s6'><form:input id="principalAmount" path="transactions[0].Amount" type="text" value="0" onchange="calculateInitialInterest()"/><label class="active" for="principalAmount">Amount</label></div>
-						<div class='input-field col s6'><form:input id="interestDate" path="transactions[1].date" type="text" readonly="true"/><label class="active" for="interestDate">Date</label></div>
-						<div class='input-field col s6'><form:input id="interestCat" path="transactions[1].category" type="text" value="return_on_interest" hidden="true"/><label class="active" for="interestCat">Category</label></div>
-						<div class='input-field col s6'><form:input id="interestAmount" path="transactions[1].Amount" type="text" value="0" readonly="true"/><label class="active" for="interestAmount">Amount</label></div>
-						<br>
-						<div class='col s12'><b>Add Items</b></div>
-						<div id="listItems">
-							<div class='col s5'>Name</div><div class='col s5'>Weight</div>
-							<div class='col s5'><input name="items[0].name" type="text"/></div>
-							<div class='col s5'><input name="items[0].weight" type="text"/></div>
-							<div class='col s2'><input class="waves-effect waves-light btn" type="button" onclick="addMoreItem()" value="Add more items"/></div>
-						</div>
-					<div class='col s3 btn waves-effect waves-light'><input id="formSubmit" type="submit" value="Submit"/></div><div class='col s1'></div>
-					<div class='col s3 btn waves-effect waves-light'><input id="formReset" type="reset" value="Reset"/></div>
-				</form:form>
-			</div>
-			</div></main>
-		</div>
-		
+				<div><form:input path="weight"/> Weight </div>
+				<form:input path="loanStatus" value = "open" hidden="true"/>
+			<div><input id="formSubmit" type="submit" value="Submit"/></div>
+			<div><input id="formReset" type="reset" value="Reset"/></div>
+		</form:form>
+	
 		<script type="text/javascript">
 			itemListId = 1;
 			$(document).ready(function(){
@@ -90,7 +64,7 @@
 						$('#name').val(ui.item.name);
 						$('#secondaryName').val(ui.item.secondaryName);
 						$('#customerId').val(ui.item.customerId);
-						$('#customerDate').val($.format.date(new Date(ui.item.date), "MM/dd/yyyy hh:mm a"));
+						$('#customerDate').val($.format.date(new Date(), 'dd-MM-yyyy'));
 						$('#address').val(ui.item.address);
 						$('#post').val(ui.item.post);
 						$('#pin').val(ui.item.pin);
@@ -102,13 +76,14 @@
 				        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
 				        .appendTo( ul );
 				};
-				$('.date').datetimepicker({format:'m/d/Y h:i A'});
-				$(".button-collapse").sideNav();
+				$('.date').datepicker({dateFormat:'dd-mm-yy'});
 			});
 			function setInterestDate(){
 				$("#interestDate").val($("#loanDate").val());
+				$("#appraisalDate").val($("#loanDate").val());
 			}
 			function calculateInitialInterest(){
+				getInterestRates();
 				$.ajax({
 					  method: "POST",
 					  url: "/TM_UI/app/loan/calculateInitialInterest",
@@ -118,13 +93,25 @@
 						  $("#interestAmount").val(interest);
 					  });
 			}
+			function getInterestRates(){
+				$.ajax({
+					  method: "POST",
+					  url: "/TM_UI/app/loan/getInterestRates",
+					  data: { principal: $("#principalAmount").val() }
+					})
+					  .done(function( interestRates ) {
+						  if(interestRates != null)
+						  	roi = interestRates[0];
+						  	$("#appraisalAmount").val(interestRates[1]);
+					  });
+			}
 			function addMoreItem(){
-				itemRow="<tr id = \"moreRow"+itemListId+"\"><td><input name=\"items["+itemListId+"].name\" type=\"text\"/></td>";
-				itemRow+="<td><input name=\"items["+itemListId+"].weight\" type=\"text\"/></td>";
+				itemRow="<div id = \"moreRow"+itemListId+"\"><div><input name=\"items["+itemListId+"].name\" type=\"text\"/></div>";
+				itemRow+="<div><input name=\"items["+itemListId+"].quantity\" type=\"text\"/></div>";
 				if(itemListId == 1){
-					itemRow+="<td><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\"/></td>";
+					itemRow+="<div><input type=\"button\" onclick=\"removeItem()\" value=\"Remove item\"/></div>";
 				}
-				itemRow+="</tr>";
+				itemRow+="</div>";
 				itemListId += 1;
  				$("#listItems").append(itemRow);
 			}
@@ -135,7 +122,7 @@
 			function clearDetails(){
 				$('#secondaryName').val('');
 				$('#customerId').val('0');
-				$('#customerDate').val($.format.date(new Date(), "MM/dd/yyyy hh:mm a"));
+				$('#customerDate').val($.format.date(new Date(), 'dd-MM-yyyy'));
 				$('#address').val('');
 				$('#post').val('');
 				$('#pin').val('');
