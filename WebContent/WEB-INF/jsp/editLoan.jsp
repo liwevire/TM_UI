@@ -185,33 +185,95 @@
 					                        <label class="control-label col-md-3 col-sm-3 col-xs-4">Amount
 					                        </label>
 										</div>
-										<div class="form-group">
+										<div id="listTransactions" class="form-group">
 											<c:set var="transactionListId" scope="page" value="0"></c:set>
 											<c:forEach items="${loan.transactions}" var="transaction">
-												<tr id="moreTransactionRow${transactionListId}">
-													<td>
+												<div id="moreTransactionRow${transactionListId}" class="form-group"> 
+													<div class="col-md-4 col-sm-4 col-xs-4">
 														<input  
-															<c:if test="${transactionListId ne 1 && transactionListId ne 2}">class="date editable col-md-3 col-sm-3 col-xs-4"</c:if>
-															<c:if test="${transactionListId eq 1 || transactionListId eq 2}">class="dateFormat col-md-3 col-sm-3 col-xs-4"</c:if>
+															<c:if test="${transactionListId ne 1 && transactionListId ne 2}">class="form-control date editable col-md-3 col-sm-3 col-xs-4"</c:if>
+															<c:if test="${transactionListId eq 1 || transactionListId eq 2}">class="form-control dateFormat col-md-3 col-sm-3 col-xs-4"</c:if>
 															id="date${transactionListId}" name="transactions[${transactionListId}].date" type="text" value="${transaction.date}" readonly="readonly">
-													</td>
-													<td>
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-4">
 														<input 
 															<c:if test="${transactionListId le 2}">readonly="true"</c:if>
-															id="category${transactionListId}" name="transactions[${transactionListId}].category" class="col-md-3 col-sm-3 col-xs-4" type="text" value="${transaction.category}">
-													</td>
-													<td>
-														<input class="editable col-md-3 col-sm-3 col-xs-4""
+															id="category${transactionListId}" name="transactions[${transactionListId}].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="${transaction.category}">
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-4">
+														<input class="editable form-control col-md-3 col-sm-3 col-xs-4"
 															onchange="calculateInitialInterest()" id="transaction${transactionListId}"
-															name="transactions[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly"></td>
+															name="transactions[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly">
+													</div>			
 													<c:if test="${transactionListId eq 0}">
-														<td><input type="button" onclick="addMoreTransactionItem()" value="Add more items" disabled/></td>
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<input type="button" class="btn btn-primary" onclick="addMoreTransactionItem()" value="Add more transactions"/>
+														</div>
 													</c:if>
 													<c:if test="${transactionListId eq 1}">
-														<td><input id="removeTransactionItem" type="button" onclick="removeTransaction()" value="Remove transaction" disabled/></td>
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<input type="button" class="btn btn-primary" id="removeTransactionItem" onclick="removeTransaction()" value="Remove transaction" disabled/>
+														</div>
 													</c:if>
-												</tr>
+												</div>
 												<c:set var="transactionListId" value="${transactionListId+1}"></c:set>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Item details</h2>
+									<ul class="nav navbar-right panel_toolbox">
+					                      <li><a class="collapse-link"><i class="fa fa-chevron-up pull-right"></i></a></li>
+					                </ul>
+					                <div class="clearfix"></div><br />
+								</div>
+								<div class="x_content">
+									<div class="form-horizontal form-label-left input_mask">
+										<div class="form-group">
+											<label class="control-label col-md-4 col-sm-4 col-xs-12">Name
+					                        </label>
+					                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Quantity
+					                        </label>
+										</div>
+										<div id="listItems">
+										<div class="form-group">
+											<c:set var="itemListId" scope="page" value="0"></c:set>
+											<c:if test="${fn:length(loan.items) le 0}">
+												<div id="moreItemRow0" class="form-group">
+													<div class="col-md-4 col-sm-4 col-xs-12">
+														<input name="items[0].name" class="editable form-control col-md-3 col-sm-3 col-xs-4" type="text"  readonly/>
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-12">
+														<input name="items[0].quantity" class="editable form-control col-md-3 col-sm-3 col-xs-4" readonly/>
+													</div>
+													<div class="col-md-4 col-sm-4 col-xs-12">
+															<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items" disabled/>
+													</div>
+													<c:set var="itemListId" value="${itemListId+1}"></c:set>
+												</div>
+											</c:if>
+										</div>
+										
+											<c:forEach items="${loan.items}" var="item">
+												<div class="form-group">
+													<div id="moreItemRow${itemListId}">
+														<div class="col-md-4 col-sm-4 col-xs-12">
+															<input name="items[${itemListId}].name" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.name}" type="text" readonly/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-12">
+															<input name="items[${itemListId}].quantity" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.quantity}" readonly/>
+														</div>
+														<c:if test="${itemListId eq 0}">
+															<div class="col-md-4 col-sm-4 col-xs-12">
+																<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items" disabled/>
+															</div>
+														</c:if>
+													</div>
+												</div>
+												<c:set var="itemListId" value="${itemListId+1}"></c:set>
 											</c:forEach>
 										</div>
 									</div>
@@ -224,97 +286,7 @@
 <!-- 		/right column|page content -->				
 		</div>
 	</div>
-	
-	<form:form action ="/TM_UI/app/loan/update" method="post" modelAttribute="editLoanForm">
-			<table>
-				<tr><th>Edit Loan</th></tr>
-				<tr><td>Loan Id:</td><td><form:input id="loanId" path="loanId" type="text" readonly="true"/></td></tr>
-				<tr><td>Name:</td><td><form:input id="name" class="editable" path="customer.name" onchange="clearDetails()" type="text" readonly="true"/></td></tr>
-				<tr><td>Secondary Name:</td><td><form:input class="editable" id="secondaryName" path="customer.secondaryName" type="text" readonly="true"/></td></tr>
-				<tr><td>Customer ID:</td><td><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input></td></tr>
-				<tr><td>Customer since:</td><td><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input></td></tr>
-				<tr><td>Address:</td><td><form:input id="address" class="editable" path="customer.address" type="text" readonly="true"/></td></tr>
-				<tr><td>Post:</td><td><form:input id="post" class="editable" path="customer.post" readonly="true"/></td></tr>
-				<tr><td>PIN:</td><td><form:input id="pin" class="editable" path="customer.pin" readonly="true"/></td></tr>
-				<tr><td>Phone:</td><td><form:input id="phone" class="editable" path="customer.phone" readonly="true"/></td></tr>
-			</table>
-			<table id="listTransactions">
-				<tr><th>Transactions</th></tr>
-				<tr><td>Date</td><td>Category</td><td>Amount</td></tr>
-				<c:set var="transactionListId" scope="page" value="0"></c:set>
-				<c:forEach items="${loan.transactions}" var="transaction">
-					<tr id="moreTransactionRow${transactionListId}">
-						<td>
-							<input  
-								<c:if test="${transactionListId ne 1}">class="date editable"</c:if>
-								<c:if test="${transactionListId eq 1}">class="dateFormat"</c:if>
-								id="date${transactionListId}" name="transactions[${transactionListId}].date" type="text" value="${transaction.date}" readonly="readonly">
-						</td>
-						<td>
-							<input 
-								<c:if test="${transactionListId le 1}">readonly="true"</c:if>
-								id="category${transactionListId}" name="transactions[${transactionListId}].category" type="text" value="${transaction.category}">
-						</td>
-						<td>
-							<input class="editable"
-								onchange="calculateInitialInterest()" id="transaction${transactionListId}"
-								name="transactions[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly"></td>
-						<c:if test="${transactionListId eq 0}">
-							<td><input type="button" onclick="addMoreTransactionItem()" value="Add more items" disabled/></td>
-						</c:if>
-						<c:if test="${transactionListId eq 1}">
-							<td><input id="removeTransactionItem" type="button" onclick="removeTransaction()" value="Remove transaction" disabled/></td>
-						</c:if>
-					</tr>
-					<c:set var="transactionListId" value="${transactionListId+1}"></c:set>
-				</c:forEach>
-			</table>
-<!-- 			<div id=outstanding></div> -->
-			
-			<div><form:select path="loanStatus" onchange='alert(\'NOTE: The loan status is changed to \'+$(this).val())'>
-				<form:option value="open" label="Open"/>
-				<form:option value="closed" label="Close"/>
-			</form:select></div>
-			<div>
-				
-				<b>Outstandings</b><br>
-				<div>Principal: <c:out value="${outstanding.currentPrincipal}"></c:out></div>
-				<div>Interest: <fmt:formatNumber value="${outstanding.outstandingInterest}" type="number" maxFractionDigits='2'/></div>
-				<div>Principal: <c:out value="${outstanding.outstandingPrincipal}"></c:out></div>
-				<div>Amount Payable: <c:out value="${outstanding.totalOustanding}"></c:out></div>
-				
-				<b>Overall</b>
-				<div>Total Days/Months: <c:out value="${outstanding.totalDays}"></c:out>/<fmt:formatNumber value="${outstanding.totalDays/30}" type="number" maxFractionDigits='2'/></div>
-			</div>
-			<br>
-			<table id="listItems">
-				<tr><th>Add Items</th></tr>
-				<tr><td>Name</td><td>Quantity</td></tr>
-				<c:set var="itemListId" scope="page" value="0"></c:set>
-				<c:if test="${fn:length(loan.items) le 0}">
-					<tr id="moreItemRow0">
-						<td><input name="items[0].name" class="editable" type="text" readonly/></td>
-						<td><input name="items[0].quantity" class="editable" readonly/></td>
-						<td><input type="button" onclick="addMoreListItem()" value="Add more items" disabled/></td>
-						<c:set var="itemListId" value="${itemListId+1}"></c:set>
-					</tr>
-				</c:if>
-				<c:forEach items="${loan.items}" var="item">
-					<tr id="moreItemRow${itemListId}">
-						<td><input name="items[${itemListId}].name" class="editable" value="${item.name}" type="text" readonly/></td>
-						<td><input name="items[${itemListId}].quantity" class="editable" value="${item.quantity}" readonly/></td>
-						<c:if test="${itemListId eq 0}">
-							<td><input type="button" onclick="addMoreListItem()" value="Add more items" disabled/></td>
-						</c:if>
-					</tr>
-					<c:set var="itemListId" value="${itemListId+1}"></c:set>
-				</c:forEach>
-			</table><br>
-			<div><form:input path="weight"/> Weight </div>
-			
-			<input id="formSubmit" type="submit" value="Submit" hidden="true"/><input id="formReset" type="reset" value="Reset" hidden="true"/>
-		</form:form>
-		<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
+	<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
 	
 <!-- Theme import statements -->
 <!-- 	<!-- jQuery --> 
@@ -428,7 +400,7 @@
 			$("#moreItemRow"+itemListId).remove();
 		}
 		function addMoreTransactionItem(){
-			transactionRow="<tr id = \"moreTransactionRow"+transactionListId+"\"><td><input class=\"click date\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></td>";
+			transactionRow="<div id = \"moreTransactionRow"+transactionListId+"\" class><td><input class=\"click date\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></td>";
 			transactionRow+="<td><input name=\"transactions["+transactionListId+"].category\" type=\"text\"/></td>";
 			transactionRow+="<td><input name=\"transactions["+transactionListId+"].amount\"/></td>";
 			transactionRow+="</tr>";
@@ -463,94 +435,13 @@
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");
 			$("input[hidden]").removeAttr("hidden");
+			$("button[disabled]").removeAttr("disabled");
+			$("button[hidden]").removeAttr("hidden");
 			$("#enableEdit").remove();
 			if(transactionListId == 2){
 				$("#removeTransactionItem").attr("disabled", "disabled");
 			}
 		}
-// 		---------------------------------------------------------------------------------------------
-// 		---------------------------------------------------------------------------------------------
-// 		function getInterestRates(){
-// 			$.ajax({
-// 				  method: "POST",
-// 				  url: "/TM_UI/app/loan/getInterestRates",
-// 				  data: { principal: $("#transaction0").val() }
-// 				})
-// 				  .done(function( interestRates ) {
-// 					  if(interestRates != null)
-// 					  	roi = interestRates[0];
-// 					  	serviceCharge = interestRates[1];
-// 					  	//calculateOutstanding(transactionListId,$("#transaction0").val(),roi,serviceCharge);
-// 				  });
-// 		}
-// 		function calculateOutstanding(transactionListId,principal,roi,serviceCharge){
-// 			dates=[];
-// 			categories=[];
-// 			transactions=[];
-// 			outstanding=parseInt(0);
-// 			debit=parseInt(0);
-// 			creditOnInterest=parseInt(0);
-// 			creditOnPrincipal=parseInt(0);
-// 			outstandingInterest = parseInt(0);
-// 			totalInterest = parseInt(serviceCharge);
-// 			principal=parseInt(0);
-// 			startDate=null;
-// 			endDate=null;
-// 			for(i = 0; i<transactionListId; i++){
-// 				dates.push($('#date'+i).val());
-// 				categories.push($('#category'+i).val());
-// 				transactions.push($('#transaction'+i).val());
-// 				//seggregation plus calculation
-// 				if(categories[i]=="principal"){
-// 					principal+=parseInt(transactions[i]);
-// 					debit+=parseInt(transactions[i]);
-// 					startDate=new Date(dates[i]);
-// 				}
-// 				else if(categories[i]=="return_on_interest"){
-// 					//TODO: check if it is for first month. alternate implemented. !?Not sure what I'm trying to say after this !? if it is credit on principal or on interest
-// 					creditOnInterest+=parseInt(transactions[i]);
-// 				}
-// 				else if(categories[i]=="return_on_principal"){
-// 					//TODO: check if it is less than a month.  
-// 					totalInterest+= parseInt(principal*roi*calculateMonths(new Date(startDate), new Date(dates[i])));
-// 					creditOnPrincipal+=parseInt(transactions[i]);
-// 					startDate=dates[i];
-// 					principal-=parseInt(transactions[i]);
-// 				}
-// 			}
-// 			monthDiff=calculateMonths(new Date(startDate), new Date());
-// 			totalInterest+= principal*roi*monthDiff;
-// 			outstandingInterest=totalInterest-creditOnInterest;
-// 			outstanding = debit+outstandingInterest-creditOnPrincipal;
-// 			var calculatedValues='<br><b> Totals</b><br>';
-// 			calculatedValues+=' Total Interest: '+totalInterest;
-// 			//change month appropriately like for a returned loan
-// 			if(loanStatus=='open')
-// 				calculatedValues+=' Months: '+calculateMonths(new Date(dates[0]), new Date());
-// 			if(loanStatus=='closed')
-// 				calculatedValues+=' Months: '+calculateMonths(new Date(dates[0]), new Date(dates[dates.length-1]));
-// 			calculatedValues+='<br><b> Outstandings</b><br>';
-// 			calculatedValues+=' Outstanding Principal: '+principal;
-// 			calculatedValues+=' Outstanding Interest: '+outstandingInterest;
-// 			calculatedValues+=' Total Outstanding: '+outstanding;
-// 			$('#outstanding').append(calculatedValues);
-// 		}
-// 		function calculateMonths(startDate, endDate){
-// 			startYear = startDate.getFullYear();
-// 			startMonth = startDate.getMonth();
-// 			startDay = startDate.getDate();
-// 			endYear = endDate.getFullYear();
-// 			endMonth = endDate.getMonth();
-// 			endDay = endDate.getDate();
-// 			monthDiff = 12*(Math.floor(endYear-startYear));
-// 			monthDiff += Math.floor(endMonth-startMonth);
-// 			temp= Math.abs(endDay-startDay);
-// 			temp=temp/15;
-// 			temp=Math.ceil(temp);
-// 			temp=temp/2;
-// 			monthDiff += (Math.ceil(Math.abs(endDay-startDay)/15))/2;
-// 			return monthDiff;
-// 		}
 	</script>
 </body>
 </html>

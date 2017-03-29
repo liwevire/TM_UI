@@ -64,6 +64,17 @@ public class LoanController {
 		model.addAttribute("outstanding", outstanding);
 		return "editLoan";
 	}
+//	--duplicate to be removed. Created for UI comparison----------------------------------------
+	@RequestMapping(method=RequestMethod.GET, value="/viewDuplicate")
+	public String viewLoan1(Model model, @RequestParam("loanId") Long loanId) throws Exception {
+		Loan loan = loanUtility.getLoan(loanId);
+		Outstanding outstanding = loanUtility.getOutstanding(loanId);
+		model.addAttribute("editLoanForm", loan);
+		model.addAttribute("loan", loan);
+		model.addAttribute("outstanding", outstanding);
+		return "editLoan-copy";
+	}
+//	--/duplicate to be removed. Created for UI comparison------------------------------------
 	@RequestMapping(method=RequestMethod.POST, value="/update")
 	public String updateLoan(Model model, @ModelAttribute("editLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
