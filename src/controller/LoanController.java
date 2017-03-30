@@ -25,7 +25,7 @@ import utility.LoanUtility;
 @Controller
 @RequestMapping(value="/loan")
 public class LoanController {
-	LoanUtility loanUtility = new LoanUtility();
+	private LoanUtility loanUtility = new LoanUtility();
 	@RequestMapping(method=RequestMethod.GET, value="/add")
 	public String addLoan(Model model) throws Exception {
 		model.addAttribute("addLoanForm", new Loan());
