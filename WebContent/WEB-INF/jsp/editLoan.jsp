@@ -477,9 +477,9 @@
 		}
 		function enableEdit() {
 			$('.date').val(function(i, oldVal) {
-			    return $.format.date(oldVal, 'dd-mm-yyyy')});
+			    return $.format.date(oldVal, 'dd-MM-yyyy')});
 			$('.dateFormat').val(function(i, oldVal) {
-			    return $.format.date(oldVal, 'dd-mm-yyyy')});
+			    return $.format.date(oldVal, 'dd-MM-yyyy')});
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");
 			$("input[hidden]").removeAttr("hidden");

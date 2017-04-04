@@ -17,7 +17,7 @@ public class Transaction implements Serializable{
 	
 	long transactionId;
 	Loan loan;
-	@DateTimeFormat(pattern = "dd-mm-yyyy")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	Date date;
 	String category;
 	double amount;
