@@ -36,7 +36,7 @@
 	<div class = 'container body'>
 		<div class="main_container">
 <!-- 		left column -->
-        	<div class="col-md-3 left_col">
+        	<div class="col-md-3 left_col menu_fixed">
           		<div class="left_col scroll-view">
             		<div class="navbar nav_title" style="border: 0;">
             			<a href="../home" class="site_title"><i class="fa fa-paw"></i> <span>Thirumurugan Bankers</span></a>
@@ -78,7 +78,6 @@
 <!-- 		/top navigation -->
 <!-- 		right column|page content -->
 			<div class="right_col" role="main">
-				
 				<div class="page-title">
 	              <div class="title_left">
 	                <h3>Update Loan</h3>
@@ -183,17 +182,17 @@
 								<div class="x_content">
 									<div class="form-horizontal form-label-left input_mask">
 										<div class="form-group">
-											<label class="control-label col-md-3 col-sm-3 col-xs-4">Date
+											<label class="col-md-3 col-sm-3 col-xs-4">Date
 					                        </label>
-					                        <label class="control-label col-md-3 col-sm-3 col-xs-4">Category
+					                        <label class="col-md-3 col-sm-3 col-xs-4">Category
 					                        </label>
-					                        <label class="control-label col-md-3 col-sm-3 col-xs-4">Amount
+					                        <label class="col-md-3 col-sm-3 col-xs-4">Amount
 					                        </label>
 										</div>
 										<div id="listTransactions" class="form-group">
-											<c:set var="transactionListId" scope="page" value="0"></c:set>
-											<c:forEach items="${loan.transactions}" var="transaction">
-												<div id="moreTransactionRow${transactionListId}" class="form-group"> 
+											<div id="moreTransactionRow${transactionListId}" class="form-group">
+												<c:set var="transactionListId" scope="page" value="0"></c:set>
+												<c:forEach items="${loan.transactions}" var="transaction">
 													<div class="col-md-4 col-sm-4 col-xs-4">
 														<input  
 															<c:if test="${transactionListId ne 1 && transactionListId ne 2}">class="form-control date editable col-md-3 col-sm-3 col-xs-4"</c:if>
@@ -208,21 +207,25 @@
 													<div class="col-md-4 col-sm-4 col-xs-4">
 														<input class="editable form-control col-md-3 col-sm-3 col-xs-4"
 															onchange="calculateInitialInterest()" id="transaction${transactionListId}"
-															name="transactions[${transactionListId}].amount" type="text" value="${transaction.amount}" readonly="readonly">
+															name="transactions[${transactionListId}].amount" type="number" value="${transaction.amount}"  readonly="readonly">
 													</div>			
 													<c:if test="${transactionListId eq 0}">
-														<div class="col-md-12 col-sm-12 col-xs-12">
-															<input type="button" class="btn btn-primary" onclick="addMoreTransactionItem()" value="Add more transactions"/>
-														</div>
+														
 													</c:if>
 													<c:if test="${transactionListId eq 1}">
-														<div class="col-md-12 col-sm-12 col-xs-12">
-															<input type="button" class="btn btn-primary" id="removeTransactionItem" onclick="removeTransaction()" value="Remove transaction" disabled/>
-														</div>
+														
 													</c:if>
-												</div>
 												<c:set var="transactionListId" value="${transactionListId+1}"></c:set>
-											</c:forEach>
+												</c:forEach>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4 col-sm-6 col-xs-12">
+													<input type="button" class="btn btn-primary" onclick="addMoreTransactionItem()" value="Add more transactions"/>
+											</div>
+											<div class="col-md-4 col-sm-6 col-xs-12">
+													<input type="button" class="btn btn-primary" id="removeTransactionItem" onclick="removeTransaction()" value="Remove transaction" disabled/>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -238,9 +241,9 @@
 								<div class="x_content">
 									<div class="form-horizontal form-label-left input_mask">
 										<div class="form-group">
-											<label class="control-label col-md-6 col-sm-6 col-xs-12">Name
+											<label class="col-md-8 col-sm-8 col-xs-8">Name
 					                        </label>
-					                        <label class="control-label col-md-6 col-sm-6 col-xs-12">Quantity
+					                        <label class="col-md-4 col-sm-4 col-xs-4">Quantity
 					                        </label>
 										</div>
 										<div id="listItems">
@@ -248,11 +251,11 @@
 											<c:forEach items="${loan.items}" var="item">
 												<div class="form-group">
 													<div id="moreItemRow${itemListId}">
-														<div class="col-md-6 col-sm-6 col-xs-12">
+														<div class="col-md-8 col-sm-8 col-xs-8">
 															<input name="items[${itemListId}].name" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.name}" type="text" readonly/>
 														</div>
-														<div class="col-md-6 col-sm-6 col-xs-12">
-															<input name="items[${itemListId}].quantity" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.quantity}" readonly/>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<input name="items[${itemListId}].quantity" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.quantity}" type="number" readonly/>
 														</div>
 														<c:if test="${itemListId eq 0}">
 															<div class="col-md-6 col-sm-6 col-xs-6">
@@ -267,33 +270,61 @@
 												<c:set var="itemListId" value="${itemListId+1}"></c:set>
 											</c:forEach>
 										</div>
+										<div class="form-group">
+											<label class="control-label col-md-6 col-sm-6 col-xs-8">Total Weight
+					                        </label>
+					                        <div class="col-md-6 col-sm-6 col-xs-4">
+					                        	<form:input id="weight" path="weight" class="editable form-control col-md-3 col-sm-3 col-xs-4" type="number" readonly="true"/>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="form-group">
+		                        <div class="col-md-3 col-sm-3 col-xs-6">
+									<label >Loan Status:</label>
+									<form:radiobutton path="loanStatus" class="flat" value="open"/> Open
+									<form:radiobutton path="loanStatus" class="flat" value="closed"/> Closed
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<label>Outstandings</label><br/>
+<%-- 									<div class="col-md-3 col-sm-3 col-xs-6">Principal: <c:out value="${outstanding.currentPrincipal}"></c:out></div> --%>
+									<div class="col-md-3 col-sm-3 col-xs-6">Principal: <c:out value="${outstanding.outstandingPrincipal}"></c:out></div>
+									<div class="col-md-3 col-sm-3 col-xs-6">Interest: <fmt:formatNumber value="${outstanding.outstandingInterest}" type="number" maxFractionDigits='2'/></div>
+									<div class="col-md-3 col-sm-3 col-xs-6">Amount Payable: <c:out value="${outstanding.totalOustanding}"></c:out></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<label>Overall</label><br/>
+									<div class="col-md-3 col-sm-3 col-xs-6">Total Days/Months: <c:out value="${outstanding.totalDays}"></c:out>/<fmt:formatNumber value="${outstanding.totalDays/30}" type="number" maxFractionDigits='2'/></div>
+								</div>
+							</div>
 							<div class="ln_solid"></div>
-								<div class="form-group">
-			                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-									  <button class="btn btn-primary" type="reset">Reset</button>
-			                          <button type="submit" class="btn btn-success">Submit</button>
-			                        </div>
-								</div>							
+							<div class="form-group">
+		                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								  <button class="btn btn-primary" type="reset" onclick="enableEdit()">Reset</button>
+		                          <button class="btn btn-success" type="submit">Submit</button>
+		                        </div>
+							</div>							
 							</div>
 							</div>
 							</div>
 						</form:form>
+						<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
 					</div>	            
 	            </div>
 			</div>
 <!-- 		/right column|page content -->				
 		</div>
 	</div>
-	<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
+	
 	
 <!-- Theme import statements -->
-<!-- 	<!-- jQuery --> 
+	<!-- jQuery --> 
     <script src="/TM_UI/package/vendors/jquery/dist/jquery.min.js"></script>
-    
-<!--     <script src="/TM_UI/resources/js/jquery-3.1.1.min.js" type="text/javascript"></script> -->
 	<script src="/TM_UI/resources/js/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="/TM_UI/resources/js/jquery-dateFormat.min.js" type="text/javascript"></script>
 	
@@ -372,8 +403,8 @@
 			$('.date').datepicker({dateFormat:'dd-mm-yy'});
 		});
 		function addMoreListItem(){
-			itemRow="<div id = \"moreItemRow"+itemListId+"\" class=\"form-group\"><div class=\"col-md-6 col-sm-6 col-xs-6\"><input class=\"editable form-control col-md-3 col-sm-3 col-xs-4\" name=\"items["+itemListId+"].name\" type=\"text\"/></div>";
-			itemRow+="<div class=\"col-md-6 col-sm-6 col-xs-6\"><input name=\"items["+itemListId+"].quantity\" class=\"editable form-control col-md-3 col-sm-3 col-xs-4\" /></div>";
+			itemRow="<div id = \"moreItemRow"+itemListId+"\" class=\"form-group\"><div class=\"col-md-8 col-sm-8 col-xs-8\"><input class=\"editable form-control col-md-3 col-sm-3 col-xs-4\" name=\"items["+itemListId+"].name\" type=\"text\"/></div>";
+			itemRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"items["+itemListId+"].quantity\" class=\"editable form-control col-md-3 col-sm-3 col-xs-4\" type=\"number\"/></div>";
 			itemRow+="</div>";
 			itemListId += 1;
 			$("#listItems").append(itemRow);
@@ -391,7 +422,7 @@
 		function addMoreTransactionItem(){
 			transactionRow="<div id = \"moreTransactionRow"+transactionListId+"\" class=\"form-group\"><div class=\"col-md-4 col-sm-4 col-xs-4\"><input class=\"date form-control col-md-3 col-sm-3 col-xs-4\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></div>";
 			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"transactions["+transactionListId+"].category\" class=\"form-control col-md-3 col-sm-3 col-xs-4\" type=\"text\"/></div>";
-			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"transactions["+transactionListId+"].amount\" class=\"form-control col-md-3 col-sm-3 col-xs-4\"/></div>";
+			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"transactions["+transactionListId+"].amount\" class=\"form-control col-md-3 col-sm-3 col-xs-4\" type=\"number\"/></div>";
 			transactionRow+="</div>";
 			transactionListId += 1;
 			$("#listTransactions").append(transactionRow);
@@ -413,8 +444,12 @@
 				  url: "/TM_UI/app/loan/calculateInitialInterest",
 				  data: { principal: $("#transaction0").val() }
 				})
-				  .done(function( initialInterest ) {
-					  $("#transaction1").val(initialInterest);
+				  .done(function( interestRates ) {
+					  if(interestRates != null)
+						initialInterest = interestRates[0];
+					  	appraisalCharge = interestRates[1];
+					  	$("#transaction1").val(initialInterest);
+					  	$("#transaction2").val(appraisalCharge);
 				  });
 		}
 		function clearDetails(){
@@ -434,11 +469,12 @@
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");
 			$("input[hidden]").removeAttr("hidden");
-// 			$("button[disabled]").removeAttr("disabled");
-// 			$("button[hidden]").removeAttr("hidden");
 			$("#enableEdit").remove();
 			if(transactionListId == 3){
 				$("#removeTransactionItem").attr("disabled", "disabled");
+			}
+			if(itemListId == 1){
+				$("#removeItem").attr("disabled", "disabled");
 			}
 		}
 	</script>

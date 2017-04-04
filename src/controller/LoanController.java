@@ -1,11 +1,9 @@
 package controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,12 +23,20 @@ import utility.LoanUtility;
 @Controller
 @RequestMapping(value="/loan")
 public class LoanController {
+	private Logger logger = Logger.getLogger(LoanController.class);
 	private LoanUtility loanUtility = new LoanUtility();
 	@RequestMapping(method=RequestMethod.GET, value="/add")
 	public String addLoan(Model model) throws Exception {
 		model.addAttribute("addLoanForm", new Loan());
 		return "addLoan";
 	}
+//	--duplicate to be removed. Created for UI comparison----------------------------------------
+	@RequestMapping(method=RequestMethod.GET, value="/addDuplicate")
+	public String addLoan1(Model model) throws Exception {
+		model.addAttribute("addLoanForm", new Loan());
+		return "addLoan2";
+	}
+//	--/duplicate to be removed. Created for UI comparison----------------------------------------
 	@RequestMapping(method=RequestMethod.POST, value="/add")
 	public String addLoan(@ModelAttribute("addLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
@@ -62,6 +68,10 @@ public class LoanController {
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
 		model.addAttribute("outstanding", outstanding);
+		logger.debug("debug from code");
+		logger.info("info from code");
+		logger.trace("trace from code");
+		logger.error("error from code");
 		return "editLoan";
 	}
 //	--duplicate to be removed. Created for UI comparison----------------------------------------
@@ -88,15 +98,18 @@ public class LoanController {
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/calculateInitialInterest")
-	public double calculateInitialInterest(@ModelAttribute("principal") double principal){
+	public List<Double> calculateInitialInterest(@ModelAttribute("principal") double principal){
+		List<Double> interestRates= new ArrayList<Double>();
 		if(principal > 0 &&principal < 5000) 
-			return (double)((principal*0.03));
+			interestRates.add((double)((principal*0.03)));
 		else if (principal >= 5000 && principal < 10000)
-			return (double)((principal*0.025));
+			interestRates.add((double)((principal*0.025)));
 		else if (principal >= 10000)
-			return (double)((principal*0.02));
+			interestRates.add((double)((principal*0.02)));
 		else
-			return 0;
+			interestRates.add((double)((principal*0)));
+		interestRates.add((double)5);
+		return interestRates;
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST, value="/getInterestRates")

@@ -4,7 +4,7 @@ public class Item{
 	long itemId;
 	Loan loan;
 	String name;
-	int quantity;
+	float quantity;
 	public Item() {		super();	}
 	public long getItemId() {
 		return itemId;
@@ -24,10 +24,10 @@ public class Item{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 }
