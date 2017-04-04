@@ -269,7 +269,7 @@
 									<div class="form-group">
 				                        <div class="col-md-3 col-sm-3 col-xs-6 disabled">
 											<label >Loan Status:</label>
-											<form:radiobutton path="loanStatus" class="flat" value="open" disabled="true" checked="checked"/> Open
+											<form:radiobutton path="loanStatus" class="flat" value="open" checked="checked"/> Open
 											<form:radiobutton path="loanStatus" class="flat" value="closed" disabled="true"/> Closed
 										</div>
 									</div>
