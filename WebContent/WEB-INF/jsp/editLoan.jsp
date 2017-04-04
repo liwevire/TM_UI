@@ -257,18 +257,18 @@
 														<div class="col-md-4 col-sm-4 col-xs-4">
 															<input name="items[${itemListId}].quantity" class="editable form-control col-md-3 col-sm-3 col-xs-4" value="${item.quantity}" type="number" readonly/>
 														</div>
-														<c:if test="${itemListId eq 0}">
-															<div class="col-md-6 col-sm-6 col-xs-6">
-																<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items" disabled/>
-															</div>
-															<div class="col-md-6 col-sm-6 col-xs-6">
-																<input id="removeItem" class="btn btn-primary" type="button" onclick="removeListItem()" value="Remove item" disabled/>
-															</div>
-														</c:if>
 													</div>
 												</div>
 												<c:set var="itemListId" value="${itemListId+1}"></c:set>
 											</c:forEach>
+										</div>
+										<div class="form-group">
+											<div class="col-md-6 col-sm-6 col-xs-6">
+												<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items" disabled/>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6">
+												<input id="removeItem" class="btn btn-primary" type="button" onclick="removeListItem()" value="Remove item" disabled/>
+											</div>
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-6 col-sm-6 col-xs-8">Total Weight
@@ -397,15 +397,13 @@
 			};
 			//restoring dateformat after reset button click
 			$("button[type='reset']").on("click", function(event){
-				alert('before reset: ' + $("input[type='text']").val());
-     			// executes before the form has been reset
+				//lines executed before reset
+				//following stops the form from resetting after this function
 				event.preventDefault();
-     			// stops the form from resetting after this function
+				// resets the form before continuing the function
 				$(this).closest('form').get(0).reset();
-     			// resets the form before continuing the function
-				alert('after reset: ' + $("input[type='text']").val());
+     			//lines executed after reset
      			enableEdit();
-     			// executes after the form has been reset
  			});
 			
 			
