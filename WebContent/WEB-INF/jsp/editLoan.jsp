@@ -305,7 +305,7 @@
 							<div class="ln_solid"></div>
 							<div class="form-group">
 		                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-								  <button class="btn btn-primary" type="reset" onclick="enableEdit()">Reset</button>
+								  <button class="btn btn-primary" type="reset">Reset</button>
 		                          <button class="btn btn-success" type="submit">Submit</button>
 		                        </div>
 							</div>							
@@ -313,7 +313,6 @@
 							</div>
 							</div>
 						</form:form>
-						<!-- 		<input type="button" id="enableEdit" value="Click here to edit" onclick="enableEdit()"/> -->
 					</div>	            
 	            </div>
 			</div>
@@ -377,6 +376,7 @@
 		var itemListId = +${itemListId};
 		var transactionListId = +${transactionListId};
 		$(document).ready(function(){
+			//autocomplete for name field
 			$("#name").autocomplete({
 				source: '${pageContext.request.contextPath}/app/customer/getNameList',
 				select: function(event, ui) {
@@ -395,7 +395,23 @@
 			        .append( "<div>" + item.name +' - '+ item.secondaryName+  "<br>" + item.address+"<br>" + item.post+ "</div>" )
 			        .appendTo( ul );
 			};
+			//restoring dateformat after reset button click
+			$("button[type='reset']").on("click", function(event){
+				alert('before reset: ' + $("input[type='text']").val());
+     			// executes before the form has been reset
+				event.preventDefault();
+     			// stops the form from resetting after this function
+				$(this).closest('form').get(0).reset();
+     			// resets the form before continuing the function
+				alert('after reset: ' + $("input[type='text']").val());
+     			enableEdit();
+     			// executes after the form has been reset
+ 			});
+			
+			
+			//date filler for interest and appraisal charges
 			$("#date0").on("change", function(e){
+				$("#date2").val($("#date0").val());
 				$("#date1").val($("#date0").val());
 			});
 			enableEdit();
@@ -469,7 +485,7 @@
 			$(".editable").removeAttr("readonly");
 			$("input[disabled]").removeAttr("disabled");
 			$("input[hidden]").removeAttr("hidden");
-			$("#enableEdit").remove();
+// 			$("#enableEdit").remove();
 			if(transactionListId == 3){
 				$("#removeTransactionItem").attr("disabled", "disabled");
 			}
