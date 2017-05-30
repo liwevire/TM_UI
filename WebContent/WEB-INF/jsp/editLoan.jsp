@@ -24,7 +24,7 @@
     <link href="/TM_UI/package/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="/TM_UI/package/build/css/custom.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/TM_UI/resources/js/jquery-ui.css">
     
 	<style>
 	  .ui-autocomplete-loading {
@@ -55,6 +55,12 @@
 			                      		<li><a href="select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
+		                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+				                    <ul class="nav child_menu">
+				                      	<li><a href="../Reports/daily">Daily</a></li>
+		                      			<li><a href="../Reports/monthly">Monthly</a></li>
+				                    </ul>
+			                 	 </li>
 		                	</ul>
 	            		</div>
 	            		<div class='menu_section'>
@@ -220,10 +226,10 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<div class="col-md-4 col-sm-6 col-xs-12">
-													<input type="button" class="btn btn-primary" onclick="addMoreTransactionItem()" value="Add more transactions"/>
+											<div class="col-md-4 col-sm-6 col-xs-6">
+												<input type="button" class="btn btn-primary" onclick="addMoreTransactionItem()" value="Add more transactions"/>
 											</div>
-											<div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="col-md-4 col-sm-6 col-xs-6">
 													<input type="button" class="btn btn-primary" id="removeTransactionItem" onclick="removeTransaction()" value="Remove transaction" disabled/>
 											</div>
 										</div>
@@ -281,8 +287,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-		                        <div class="col-md-3 col-sm-3 col-xs-6">
+		                        <div class="col-md-3 col-sm-3 col-xs-12">
 									<label >Loan Status:</label>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12">	
 									<form:radiobutton path="loanStatus" class="flat" value="open"/> Open
 									<form:radiobutton path="loanStatus" class="flat" value="closed"/> Closed
 								</div>

@@ -40,11 +40,17 @@
 				                <ul class="nav side-menu">
 									<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
 				                    	<ul class="nav child_menu">
-				                      		<li><a href="loan/add">Add loan</a></li>
-				                      		<li><a href="loan/select">Edit loan</a></li>
+				                      		<li><a href="add">Add loan</a></li>
+				                      		<li><a href="select">Edit loan</a></li>
 				                    	</ul>
 			                  		</li>
-			                	</ul>
+			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+					                    <ul class="nav child_menu">
+					                      	<li><a href="../Reports/daily">Daily</a></li>
+			                      			<li><a href="../Reports/monthly">Monthly</a></li>
+					                    </ul>
+				                 	 </li>
+		                		</ul>
 		            		</div>
 		            		<div class='menu_section'>
 	            				<h3>Reports</h3>

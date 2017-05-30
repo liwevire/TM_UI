@@ -68,10 +68,10 @@ public class LoanController {
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
 		model.addAttribute("outstanding", outstanding);
-		logger.debug("debug from code");
-		logger.info("info from code");
-		logger.trace("trace from code");
-		logger.error("error from code");
+		logger.debug("test debug from code");
+		logger.info("test info from code");
+		logger.trace("test trace from code");
+		logger.error("test error from code");
 		return "editLoan";
 	}
 //	--duplicate to be removed. Created for UI comparison----------------------------------------
