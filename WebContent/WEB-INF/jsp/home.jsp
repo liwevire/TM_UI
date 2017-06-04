@@ -40,14 +40,14 @@
 				                <ul class="nav side-menu">
 									<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
 				                    	<ul class="nav child_menu">
-				                      		<li><a href="add">Add loan</a></li>
-				                      		<li><a href="select">Edit loan</a></li>
+				                      		<li><a href="./loan/add">Add loan</a></li>
+				                      		<li><a href="./loan/select">Edit loan</a></li>
 				                    	</ul>
 			                  		</li>
 			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
 					                    <ul class="nav child_menu">
-					                      	<li><a href="../Reports/daily">Daily</a></li>
-			                      			<li><a href="../Reports/monthly">Monthly</a></li>
+					                      	<li><a href="./reports/daily">Daily</a></li>
+			                      			<li><a href="./reports/monthly">Monthly</a></li>
 					                    </ul>
 				                 	 </li>
 		                		</ul>
@@ -81,9 +81,31 @@
 		            <div class="clearfix"></div>
 		            <br/>
 		            <div class='row'>
-		            	<a href="/TM_UI/app/loan/add">Add Loan</a><br>
-						<a href="/TM_UI/app/loan/select">Update Loan</a>	
-		            </div>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Loan</h2>
+									<div class="clearfix"></div><br/>
+								</div>
+								<div class="x_content">
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/add" class="btn btn-default btn-block">Add Loan</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/select" class="btn btn-default btn-block">Update Loan</a></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Reports</h2>
+									<div class="clearfix"></div><br/>
+								</div>
+								<div class="x_content">
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/reports/daily" class="btn btn-default btn-block">Daily</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app//reports/monthly" class="btn btn-default btn-block">Monthly</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
 		         </div>
 	<!-- 		/right column|page content -->
 			</div>

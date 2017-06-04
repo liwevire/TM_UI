@@ -10,7 +10,7 @@ public class Customer{
 	long customerId;
 	String name;
 	String secondaryName;
-	@DateTimeFormat(pattern = "dd-mm-yyyy")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	Date date;
 	String address;
 	String post;

@@ -15,10 +15,6 @@ public class HomeController {
 	@RequestMapping(method=RequestMethod.GET)
 	public String home() {
 		Logger logger = Logger.getLogger(HomeController.class);
-		logger.info("info");
-		logger.debug("debug");
-		logger.error("error");
-		logger.trace("trace");
 		return "home";
 	}
 }

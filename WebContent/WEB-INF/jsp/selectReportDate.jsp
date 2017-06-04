@@ -77,52 +77,33 @@
 			<div class="right_col" role="main">
 	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<form:form action ="view" method="get" modelAttribute="viewLoanForm">
+						<form:form action ="view" method="get" modelAttribute="dailyReportForm">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Select Loan</h2>
+									<h2>Select Report date</h2>
 									<div class="clearfix"></div><br/>
 								</div>
-								<div class="x_content">
+				            	<div class="x_content">
 									<div class="form-horizontal form-label-left input_mask">
-										<div class="form-horizontal form-label-left input_mask">
-			                    			<div class="form-group">
-						                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="selectLoanId">Loan Id
-						                        </label>
-						                        <div class="col-md-3 col-sm-3 col-xs-12">
-						                        	<form:input id="selectLoanId" path="loanId" type="number" class="form-control"/>
-						                        </div>
-						                        <div class="col-md-6 col-sm-6 col-xs-12">
-						                          <button class="btn btn-success" type="submit">Submit</button>
-						                          <button class="btn btn-primary" type="reset" >Reset</button>
-						                        </div>
-					                      	</div>
-										</div>	
+		                    			<div class="form-group">
+					                        <label class="control-label col-md-3 col-sm-2 col-xs-12">Report date</label>
+					                        <div class="col-md-3 col-sm-3 col-xs-12">
+					                        	<form:input id="selectDate" path="date" class="form-control date"/>
+					                        </div>
+					                        <div class="col-md-6 col-sm-6 col-xs-12">
+					                          <button class="btn btn-success" type="submit">Submit</button>
+					                          <button class="btn btn-primary" type="reset" >Reset</button>
+					                        </div>
+				                      	</div>
 				            		</div>
 				            	</div>
 							</div>
 		            	</form:form>
 		            </div>
-		            <div id="loanDetails" class="col-md-12 col-sm-12 col-xs-12">
-		            
-		            </div>
 	            </div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-// 		function loadLoan(){
-// 			$.ajax({
-// 				  method: "GET",
-// 				  url: "/TM_UI/app/loan/view",
-// 				  data: { loanId: $("#selectLoanId").val() }
-// 				})
-// 				  .done(function( loanDetails ) {
-// 					  if(loanDetails!= null)
-// 					  	$("#loanDetails").val(loanDetails);
-// 				  });
-// 		}
-	</script>
 	<!-- Theme import statements -->
 	<!-- jQuery -->
 	<script src="/TM_UI/package/vendors/jquery/dist/jquery.min.js"></script>
@@ -175,6 +156,13 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="/TM_UI/package/build/js/custom.min.js"></script>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.date').datepicker({dateFormat:'dd-mm-yy'});
+		});
+	</script>
 	
 </body>
 </html>

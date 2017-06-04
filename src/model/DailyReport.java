@@ -3,8 +3,11 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class DailyReport implements Serializable{
 	private static final long serialVersionUID = 1L;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date date;
 	private double principal;
 	private double roi;

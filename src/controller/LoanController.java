@@ -59,7 +59,7 @@ public class LoanController {
 	@RequestMapping(method=RequestMethod.GET, value="/select")
 	public String viewLoan(Model model) throws Exception {
 		model.addAttribute("viewLoanForm", new Loan());
-		return "viewLoan";
+		return "selectLoan";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/view")
 	public String viewLoan(Model model, @RequestParam("loanId") Long loanId) throws Exception {
@@ -68,10 +68,6 @@ public class LoanController {
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
 		model.addAttribute("outstanding", outstanding);
-		logger.debug("test debug from code");
-		logger.info("test info from code");
-		logger.trace("test trace from code");
-		logger.error("test error from code");
 		return "editLoan";
 	}
 //	--duplicate to be removed. Created for UI comparison----------------------------------------

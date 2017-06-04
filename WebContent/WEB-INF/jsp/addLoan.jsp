@@ -55,8 +55,8 @@
 			                  		</li>
 			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
 					                    <ul class="nav child_menu">
-					                      	<li><a href="../Reports/daily">Daily</a></li>
-			                      			<li><a href="../Reports/monthly">Monthly</a></li>
+					                      	<li><a href="./reports/daily">Daily</a></li>
+			                      			<li><a href="./reports/monthly">Monthly</a></li>
 					                    </ul>
 				                 	 </li>
 		                		</ul>
@@ -130,7 +130,7 @@
 									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Customer ID
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
-									                        	<form:input id="customerId" path="customer.customerId" type="number" class="form-control col-md-7 col-xs-12"/>
+									                        	<form:input id="customerId" path="customer.customerId" type="number" class="form-control col-md-7 col-xs-12" readonly="true"/>
 									                        </div>
 								                      	</div>
 								                      	<div class="form-group">
@@ -138,7 +138,7 @@
 									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Customer since
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
-									                        	<form:input id="customerDate" path="customer.date" type="text" class="form-control col-md-7 col-xs-12"/>
+									                        	<form:input id="customerDate" path="customer.date" type="text" class="form-control col-md-7 col-xs-12" readonly="true"/>
 									                        </div>
 								                      	</div>
 								                      	<div class="form-group">
@@ -177,117 +177,115 @@
 					                    		</div>
 				                    		</div>
 			                    		</div>
-		                    		</div>
-		                    		<div class="x_panel">
-										<div class="x_title">
-											<h2>Transaction details</h2>
-											<ul class="nav navbar-right panel_toolbox">
-							                      <li><a class="collapse-link"><i class="fa fa-chevron-up pull-right"></i></a></li>
-							                </ul>
-							                <div class="clearfix"></div><br />
-										</div>
-										<div class="x_content">
-											<div class="form-horizontal form-label-left input_mask">
-												<div class="form-group">
-													<label class="col-md-3 col-sm-3 col-xs-4">Date
-							                        </label>
-							                        <label class="col-md-3 col-sm-3 col-xs-4">Category
-							                        </label>
-							                        <label class="col-md-3 col-sm-3 col-xs-4">Amount
-							                        </label>
-												</div>
-												<div class="form-group">
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="loanDate" class="date form-control col-md-3 col-sm-3 col-xs-4" path="transactions[0].date" type="text" onchange="setInterestDate()"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="principalCat" path="transactions[0].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="principal" hidden="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="principalAmount" path="transactions[0].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" onchange="calculateInitialInterest()"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="interestDate" path="transactions[1].date" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" readonly="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="interestCat" path="transactions[1].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="first_month_interest" hidden="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="interestAmount" path="transactions[1].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" readonly="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="appraisalDate" path="transactions[2].date" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" readonly="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="appraisalCat" path="transactions[2].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="appraisal_charges" hidden="true"/>
-													</div>
-													<div class="col-md-4 col-sm-4 col-xs-4">
-														<form:input id="appraisalAmount" path="transactions[2].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" readonly="true"/>
-													</div>
-												</div>
+		                    		
+			                    		<div class="x_panel">
+											<div class="x_title">
+												<h2>Transaction details</h2>
+												<ul class="nav navbar-right panel_toolbox">
+								                      <li><a class="collapse-link"><i class="fa fa-chevron-up pull-right"></i></a></li>
+								                </ul>
+								                <div class="clearfix"></div><br />
 											</div>
-										</div>
-									</div>
-									<div class="x_panel">
-										<div class="x_title">
-											<h2>Item details</h2>
-											<ul class="nav navbar-right panel_toolbox">
-							                      <li><a class="collapse-link"><i class="fa fa-chevron-up pull-right"></i></a></li>
-							                </ul>
-							                <div class="clearfix"></div><br />
-										</div>
-										<div class="x_content">
-											<div class="form-horizontal form-label-left input_mask">
-												<div class="form-group">
-													<label class="col-md-8 col-sm-8 col-xs-8">Name
-							                        </label>
-							                        <label class="col-md-4 col-sm-4 col-xs-4">Quantity
-							                        </label>
-												</div>
-												<div id="listItems">
+											<div class="x_content">
+												<div class="form-horizontal form-label-left input_mask">
 													<div class="form-group">
-														<div class="col-md-8 col-sm-8 col-xs-8"> 
-															<input name="items[0].name" class="form-control col-md-3 col-sm-3 col-xs-4" type="text"/>
+														<label class="col-md-3 col-sm-3 col-xs-4">Date</label>
+								                        <label class="col-md-3 col-sm-3 col-xs-4">Category</label>
+								                        <label class="col-md-3 col-sm-3 col-xs-4">Amount</label>
+													</div>
+													<div class="form-group">
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="loanDate" class="date form-control col-md-3 col-sm-3 col-xs-4" path="transactions[0].date" type="text" onchange="setInterestDate()"/>
 														</div>
-														<div class="col-md-4 col-sm-4 col-xs-4"> 
-															<input name="items[0].quantity" class="form-control col-md-3 col-sm-3 col-xs-4" type="number"/>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="principalCat" path="transactions[0].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="principal" hidden="true"/>
 														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="col-md-6 col-sm-6 col-xs-6">
-														<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items"/>
-													</div>
-													<div class="col-md-6 col-sm-6 col-xs-6">
-														<input id="removeItem" class="btn btn-primary" type="button" onclick="removeListItem()" value="Remove item"/>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="control-label col-md-6 col-sm-6 col-xs-8">Total Weight
-							                        </label>
-							                        <div class="col-md-6 col-sm-6 col-xs-4">
-							                        	<form:input id="weight" path="weight" class="editable form-control col-md-3 col-sm-3 col-xs-4" type="number"/>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="principalAmount" path="transactions[0].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" onchange="calculateInitialInterest()"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="interestDate" path="transactions[1].date" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" readonly="true"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="interestCat" path="transactions[1].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="first_month_interest" hidden="true"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="interestAmount" path="transactions[1].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" readonly="true"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="appraisalDate" path="transactions[2].date" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" readonly="true"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="appraisalCat" path="transactions[2].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="appraisal_charges" hidden="true"/>
+														</div>
+														<div class="col-md-4 col-sm-4 col-xs-4">
+															<form:input id="appraisalAmount" path="transactions[2].Amount" class="form-control col-md-3 col-sm-3 col-xs-4" type="number" value="0" readonly="true"/>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="form-group">
-				                        <div class="col-md-3 col-sm-3 col-xs-12">
-											<label >Loan Status:</label>
+										<div class="x_panel">
+											<div class="x_title">
+												<h2>Item details</h2>
+												<ul class="nav navbar-right panel_toolbox">
+								                      <li><a class="collapse-link"><i class="fa fa-chevron-up pull-right"></i></a></li>
+								                </ul>
+								                <div class="clearfix"></div><br />
+											</div>
+											<div class="x_content">
+												<div class="form-horizontal form-label-left input_mask">
+													<div class="form-group">
+														<label class="col-md-8 col-sm-8 col-xs-8">Name
+								                        </label>
+								                        <label class="col-md-4 col-sm-4 col-xs-4">Quantity
+								                        </label>
+													</div>
+													<div id="listItems">
+														<div class="form-group">
+															<div class="col-md-8 col-sm-8 col-xs-8"> 
+																<input name="items[0].name" class="form-control col-md-3 col-sm-3 col-xs-4" type="text"/>
+															</div>
+															<div class="col-md-4 col-sm-4 col-xs-4"> 
+																<input name="items[0].quantity" class="form-control col-md-3 col-sm-3 col-xs-4" type="number"/>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="col-md-6 col-sm-6 col-xs-6">
+															<input class="btn btn-primary" type="button" onclick="addMoreListItem()" value="Add more items"/>
+														</div>
+														<div class="col-md-6 col-sm-6 col-xs-6">
+															<input id="removeItem" class="btn btn-primary" type="button" onclick="removeListItem()" value="Remove item"/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label col-md-6 col-sm-6 col-xs-8">Total Weight
+								                        </label>
+								                        <div class="col-md-6 col-sm-6 col-xs-4">
+								                        	<form:input id="weight" path="weight" class="editable form-control col-md-3 col-sm-3 col-xs-4" type="number"/>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
-										<div class="col-md-3 col-sm-3 col-xs-12">	
-											<form:radiobutton path="loanStatus" class="flat" value="open"/> Open
-											<form:radiobutton path="loanStatus" class="flat" value="closed"/> Closed
+										<div class="form-group">
+					                        <div class="col-md-3 col-sm-3 col-xs-12">
+												<label >Loan Status:</label>
+											</div>
+											<div class="col-md-3 col-sm-3 col-xs-12">	
+												<form:radiobutton path="loanStatus" class="flat" value="open" checked="checked"/> Open
+												<form:radiobutton path="loanStatus" class="flat" value="closed"/> Closed
+											</div>
 										</div>
-									</div>
-									<div class="clearfix"></div><br/>
-									<div class="ln_solid"></div>
-									<div class="form-group">
-				                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-										  <button class="btn btn-primary" type="reset">Reset</button>
-				                          <button class="btn btn-success" type="submit">Submit</button>
-				                        </div>
+										<div class="clearfix"></div><br/>
+										<div class="ln_solid"></div>
+										<div class="form-group">
+					                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+											  <button class="btn btn-primary" type="reset">Reset</button>
+					                          <button class="btn btn-success" type="submit">Submit</button>
+					                        </div>
+										</div>
 									</div>
 	                    		</div>
                     		</form:form>
