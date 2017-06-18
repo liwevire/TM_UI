@@ -5,7 +5,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class DailyReport implements Serializable{
+public class Daily implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date date;
@@ -14,6 +14,7 @@ public class DailyReport implements Serializable{
 	private double rop;
 	private double firstMonthInterest;
 	private double appraisalCharges;
+	private double closingBalance;
 	public Date getDate() {
 		return date;
 	}
@@ -41,6 +42,12 @@ public class DailyReport implements Serializable{
 	public double getFirstMonthInterest() {
 		return firstMonthInterest;
 	}
+	public double getClosingBalance() {
+		return closingBalance;
+	}
+	public void setClosingBalance(double closingBalance) {
+		this.closingBalance = closingBalance;
+	}
 	public void setFirstMonthInterest(double firstMonthInterest) {
 		this.firstMonthInterest = firstMonthInterest;
 	}
@@ -49,5 +56,19 @@ public class DailyReport implements Serializable{
 	}
 	public void setAppraisalCharges(double appraisalCharges) {
 		this.appraisalCharges = appraisalCharges;
+	}
+	public Daily() {
+		super();
+	}
+	public Daily(Date date, double principal, double roi, double rop, double firstMonthInterest,
+			double appraisalCharges, double closingBalance) {
+		super();
+		this.date = date;
+		this.principal = principal;
+		this.roi = roi;
+		this.rop = rop;
+		this.firstMonthInterest = firstMonthInterest;
+		this.appraisalCharges = appraisalCharges;
+		this.closingBalance = closingBalance;
 	}
 }

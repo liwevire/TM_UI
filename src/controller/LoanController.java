@@ -85,9 +85,9 @@ public class LoanController {
 	public String updateLoan(Model model, @ModelAttribute("editLoanForm") Loan loan, final RedirectAttributes redirectAttributes) throws Exception {
 		redirectAttributes.addFlashAttribute("loan", loan);
 		loanUtility.updateLoan(loan);
-		for (Transaction transaction:loan.getTransactions()) {
-			System.out.println(transaction.getDate());
-		}
+//		for (Transaction transaction:loan.getTransactions()) {
+//			System.out.println(transaction.getDate());
+//		}
 		String message= "Updated successfully";
 		redirectAttributes.addFlashAttribute("message",message);
 		return "redirect:getLoanAdditionStatus";

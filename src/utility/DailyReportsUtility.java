@@ -9,7 +9,7 @@ import java.util.Date;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jmx.snmp.Timestamp;
 
-import model.DailyReport;
+import model.Daily;
 import model.Loan;
 
 public class DailyReportsUtility extends ConnectionUtility {
@@ -23,8 +23,9 @@ public class DailyReportsUtility extends ConnectionUtility {
 		System.out.println(date.getTime());
 		System.out.println(new Timestamp(date.getTime()));
 	}
-	public DailyReport getDailyReport(Date date) throws Exception {
+	public Daily getDailyReport(Date date) throws Exception {
 		String query = "?calculationDate=05/27/2017";
+		System.out.println("date captured at browser:"+ date.toString());
 		connection = openConnection("http://localhost:6080/TM_Service/reports/calculateDaily", "GET", query);
 		String output;
 		StringBuffer response = new StringBuffer();
@@ -33,7 +34,7 @@ public class DailyReportsUtility extends ConnectionUtility {
 				response.append(output);
 			}
 		}
-		DailyReport dailyReport = mapper.readValue(response.toString(), DailyReport.class);
+		Daily dailyReport = mapper.readValue(response.toString(), Daily.class);
 		return dailyReport;
 	}
 }

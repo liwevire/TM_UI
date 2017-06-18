@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import model.DailyReport;
+import model.Daily;
 import model.Loan;
 import model.Outstanding;
 import utility.DailyReportsUtility;
@@ -28,12 +28,11 @@ public class ReportsController {
 	public String viewDailyReport(Model model) {
 		DailyReportsUtility reportsUtility = new DailyReportsUtility();
 //		reportsUtility.
-		model.addAttribute("dailyReportForm", new DailyReport());
+		model.addAttribute("dailyReportForm", new Daily());
 		return "selectReportDate";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/view")
-	public String viewDailyReport(Model model, @ModelAttribute("dailyReportForm") DailyReport dailyReport) throws Exception {
-		System.out.println(dailyReport.getDate());
+	public String viewDailyReport(Model model, @ModelAttribute("dailyReportForm") Daily dailyReport) throws Exception {
 		dailyReport = dailyReportUtility.getDailyReport(dailyReport.getDate());
 		model.addAttribute("dailyReportForm", dailyReport);
 		return "viewDailyReport";

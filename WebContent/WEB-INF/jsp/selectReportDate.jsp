@@ -42,14 +42,14 @@
 			                <ul class="nav side-menu">
 								<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
-			                      		<li><a href="add">Add loan</a></li>
-			                      		<li><a href="select">Edit loan</a></li>
+			                      		<li><a href="../loan/add">Add loan</a></li>
+			                      		<li><a href="../loan/select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
 		                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="../Reports/daily">Daily</a></li>
-		                      			<li><a href="../Reports/monthly">Monthly</a></li>
+				                      	<li><a href="../reports/daily">Daily</a></li>
+		                      			<li><a href="../reports/monthly">Monthly</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>

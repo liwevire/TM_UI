@@ -15,7 +15,6 @@ public class LoanUtility extends ConnectionUtility{
 	public String addLoan(Loan loan) throws Exception {
 		String jsonLoad = mapper.writeValueAsString(loan);
 		byte[] postData = jsonLoad.getBytes();
-		System.out.println(jsonLoad);
 		connection = openConnection("http://localhost:6080/TM_Service/loan/add", "POST",
 				mapper.writeValueAsString(loan));
 		connection.setRequestProperty("Content-Type", "application/json");
