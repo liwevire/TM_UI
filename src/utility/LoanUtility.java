@@ -7,8 +7,8 @@ import java.net.URLEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.Loan;
-import model.Outstanding;
+import model.core.Loan;
+import model.core.Outstanding;
 
 public class LoanUtility extends ConnectionUtility{
 	ObjectMapper mapper = new ObjectMapper();

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.Customer;
+import model.core.Customer;
 import utility.CustomerUtility;
 
 @EnableWebMvc

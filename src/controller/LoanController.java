@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import model.Loan;
-import model.Outstanding;
-import model.Transaction;
+import model.core.Loan;
+import model.core.Outstanding;
+import model.core.Transaction;
 import utility.LoanUtility;
 
 @EnableWebMvc

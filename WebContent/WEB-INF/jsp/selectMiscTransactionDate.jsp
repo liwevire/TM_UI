@@ -1,6 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -76,55 +75,35 @@
 <!-- 		/top navigation -->
 <!-- 		right column|page content -->
 			<div class="right_col" role="main">
-				<div class='row'>
+	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								<h2>
-									Balance sheet-Daily
-								</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-								</ul>
-								<div class="clearfix"></div>
+						<form:form action ="view" method="get" modelAttribute="dailyReportForm">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Select Report date</h2>
+									<div class="clearfix"></div><br/>
+								</div>
+				            	<div class="x_content">
+									<div class="form-horizontal form-label-left input_mask">
+		                    			<div class="form-group">
+					                        <label class="control-label col-md-3 col-sm-2 col-xs-12">Report date</label>
+					                        <div class="col-md-3 col-sm-3 col-xs-12">
+					                        	<form:input id="selectDate" path="date" class="form-control date"/>
+					                        </div>
+					                        <div class="col-md-6 col-sm-6 col-xs-12">
+					                          <button class="btn btn-success" type="submit">Submit</button>
+					                          <button class="btn btn-primary" type="reset" >Reset</button>
+					                        </div>
+				                      	</div>
+				            		</div>
+				            	</div>
 							</div>
-							<div class="x_content">
-								<p class="text-muted font-13 m-b-30">
-									Outstanding
-								</p>
-								<table id="datatable" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Date</th>
-											<th>Principal</th>
-											<th>RoInterest</th>
-											<th>RoPrincipal</th>
-											<th>App_Charges</th>
-											<th>Closing Balance</th>
-											
-										</tr>
-									</thead>
-
-									<tbody>
-										<tr>
-											<td><fmt:formatDate type = "date" value = "${dailyReport.date}" /></td>
-											<td>${dailyReport.principal}</td>
-											<td>${dailyReport.roi}</td>
-											<td>${dailyReport.rop}</td>
-											<td>${dailyReport.appraisalCharges}</td>
-											<td>${dailyReport.closingBalance}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+		            	</form:form>
+		            </div>
+	            </div>
 			</div>
 		</div>
 	</div>
-	
 	<!-- Theme import statements -->
 	<!-- jQuery -->
 	<script src="/TM_UI/package/vendors/jquery/dist/jquery.min.js"></script>
@@ -177,6 +156,13 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="/TM_UI/package/build/js/custom.min.js"></script>
+	
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.date').datepicker({dateFormat:'dd-mm-yy'});
+		});
+	</script>
 	
 </body>
 </html>
