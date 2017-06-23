@@ -26,14 +26,14 @@ public class ReportsController {
 	@RequestMapping(method=RequestMethod.GET, value="/daily")
 	public String viewDailyReport(Model model) {
 		model.addAttribute("dailyReportForm", new Daily());
-		return "selectReportDate";
+		return "selectDailyReportDate";
 	}
-	@RequestMapping(method=RequestMethod.GET, value="/view")
+	@RequestMapping(method=RequestMethod.GET, value="/daily/view")
 	public String viewDailyReport(Model model, @ModelAttribute("dailyReportForm") Daily dailyReport) throws Exception {
 		dailyReport = dailyReportUtility.getDailyReport(dailyReport.getDate());
 		List<MiscTransaction> miscTransactions = miscTransactionUtility.getMiscTransaction(dailyReport.getDate());
 		model.addAttribute("dailyReport", dailyReport);
-		model.addAttribute("miscTransactions", dailyReport);
+		model.addAttribute("miscTransactions", miscTransactions);
 		return "viewDailyReport";
 	}
 }

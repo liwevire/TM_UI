@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,14 +44,14 @@
 			                <ul class="nav side-menu">
 								<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
-			                      		<li><a href="../loan/add">Add loan</a></li>
-			                      		<li><a href="../loan/select">Edit loan</a></li>
+			                      		<li><a href="../../loan/add">Add loan</a></li>
+			                      		<li><a href="../../loan/select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
 		                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="../reports/daily">Daily</a></li>
-		                      			<li><a href="../reports/monthly">Monthly</a></li>
+				                      	<li><a href="../../reports/daily">Daily</a></li>
+		                      			<li><a href="../../reports/monthly">Monthly</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>
@@ -90,33 +91,69 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-								<p class="text-muted font-13 m-b-30">
-									Outstanding
-								</p>
-								<table id="datatable" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Date</th>
-											<th>Principal</th>
-											<th>RoInterest</th>
-											<th>RoPrincipal</th>
-											<th>App_Charges</th>
-											<th>Closing Balance</th>
-											
-										</tr>
-									</thead>
-
-									<tbody>
-										<tr>
-											<td><fmt:formatDate type = "date" value = "${dailyReport.date}" /></td>
-											<td>${dailyReport.principal}</td>
-											<td>${dailyReport.roi}</td>
-											<td>${dailyReport.rop}</td>
-											<td>${dailyReport.appraisalCharges}</td>
-											<td>${dailyReport.closingBalance}</td>
-										</tr>
-									</tbody>
-								</table>
+								<div class="x_panel">
+									<div class="x_title">
+										<h2>Outstanding</h2>
+										<div class="clearfix"></div><br/>
+									</div>
+									<div class="x_content">
+										<table id="datatable" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Date</th>
+													<th>Principal</th>
+													<th>RoInterest</th>
+													<th>RoPrincipal</th>
+													<th>App_Charges</th>
+													<th>MiscTransaction</th>
+													<th>Closing Balance</th>
+													
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><fmt:formatDate type = "date" value = "${dailyReport.date}" /></td>
+													<td>${dailyReport.principal}</td>
+													<td>${dailyReport.roi}</td>
+													<td>${dailyReport.rop}</td>
+													<td>${dailyReport.appraisalCharges}</td>
+													<td>${dailyReport.appraisalCharges}</td>
+													<td>${dailyReport.closingBalance}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="x_panel">
+									<div class="x_title">
+										<h2>Miscellaneous Transactions</h2>
+										<div class="clearfix"></div><br/>
+									</div>
+									<div class="x_content">
+										
+										<table id="datatable" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Date</th>
+													<th>Description</th>
+													<th>Amount</th>
+													<th>Type</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${miscTransactions}" var="transaction">
+													<tr>
+														<td><fmt:formatDate type = "date" value = "${transaction.date}" /></td>
+														<td>${transaction.description}</td>
+														<td>${transaction.amount}</td>
+														
+														<td>${transaction.transactionType}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>	
+								</div>
 							</div>
 						</div>
 					</div>

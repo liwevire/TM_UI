@@ -55,8 +55,8 @@
 			                  		</li>
 			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
 					                    <ul class="nav child_menu">
-					                      	<li><a href="./reports/daily">Daily</a></li>
-			                      			<li><a href="./reports/monthly">Monthly</a></li>
+					                      	<li><a href="../reports/daily">Daily</a></li>
+			                      			<li><a href="../reports/monthly">Monthly</a></li>
 					                    </ul>
 				                 	 </li>
 		                		</ul>

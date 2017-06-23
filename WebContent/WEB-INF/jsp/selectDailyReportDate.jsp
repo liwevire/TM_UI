@@ -77,7 +77,7 @@
 			<div class="right_col" role="main">
 	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<form:form action ="view" method="get" modelAttribute="dailyReportForm">
+						<form:form action ="daily/view" method="get" modelAttribute="dailyReportForm">
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>Select Report date</h2>
