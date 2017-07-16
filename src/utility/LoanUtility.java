@@ -3,8 +3,12 @@ package utility;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.core.Loan;
@@ -31,8 +35,8 @@ public class LoanUtility extends ConnectionUtility{
 		}
 		return response.toString();
 	}
-	public Loan getLoan(long loanId) throws Exception {
-		String query = "?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8");
+	public Loan getLoan(String loanId) throws Exception {
+		String query = "?loanId="+loanId;
 		connection = openConnection("http://localhost:6080/TM_Service/loan/get", "GET", query);
 		String output;
 		StringBuffer response = new StringBuffer();
@@ -65,8 +69,8 @@ public class LoanUtility extends ConnectionUtility{
 		}
 		return response.toString();
 	}
-	public Outstanding getOutstanding(Long loanId) throws Exception {
-		String query = "?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8");
+	public Outstanding getOutstanding(String loanId) throws Exception {
+		String query = "?loanId="+loanId;
 		connection = openConnection("http://localhost:6080/TM_Service/loan/getOutstanding", "GET", query);
 		String output;
 		StringBuffer response = new StringBuffer();
@@ -77,5 +81,43 @@ public class LoanUtility extends ConnectionUtility{
 		}
 		Outstanding outstanding = mapper.readValue(response.toString(), Outstanding.class);
 		return outstanding;
+	}
+	public List<Loan> getLoan(Date date) throws Exception {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
+	    String formattedDate= formatter.format(date);  
+		String query = "?date="+formattedDate;
+		connection = openConnection("http://localhost:6080/TM_Service/loan/getLoansByDate", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		List<Loan> loans= mapper.readValue(response.toString(), new TypeReference<ArrayList<Loan>>() {});
+		return loans;
+	}
+	public List<Loan> getLoan(Date fromDate, Date toDate) throws Exception {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
+	    String formattedFromDate= formatter.format(fromDate);  
+	    String formattedToDate= formatter.format(toDate);  
+		String query = "?fromDate="+formattedFromDate+"&toDate="+ formattedToDate;
+		connection = openConnection("http://localhost:6080/TM_Service/loan/getOpenLoans", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		List<Loan> loans= mapper.readValue(new InputStreamReader(connection.getInputStream()), new TypeReference<ArrayList<Loan>>() {});
+		return loans;
+	}
+	public String deleteLoan(String loanId) throws Exception {
+		String query = "?loanId="+loanId;
+		connection = openConnection("http://localhost:6080/TM_Service/loan/delete", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		return response.toString();
 	}
 }

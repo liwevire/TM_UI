@@ -28,7 +28,7 @@
 	        	<div class="col-md-3 left_col menu_fixed">
 	          		<div class="left_col scroll-view">
 	            		<div class="navbar nav_title" style="border: 0;">
-	            			<a href="home" class="site_title"><i class="fa fa-paw"></i> <span>TM</span></a>
+	            			<a href="home" class="site_title"><i class="fa fa-gear"></i> <span>TM</span></a>
 	            		</div>
 	            		<div class="clearfix"></div>
 	            		<br/>
@@ -38,23 +38,27 @@
 		            		<div class="menu_section">
 			            		<h3>Entry/Changes</h3>
 				                <ul class="nav side-menu">
-									<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
+									<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 				                    	<ul class="nav child_menu">
 				                      		<li><a href="./loan/add">Add loan</a></li>
 				                      		<li><a href="./loan/select">Edit loan</a></li>
+				                      		<li><a href="./loan/viewOpenLoans">Get open loans</a></li>
 				                    	</ul>
 			                  		</li>
-			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+			                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
 					                    <ul class="nav child_menu">
 					                      	<li><a href="./reports/daily">Daily</a></li>
 			                      			<li><a href="./reports/monthly">Monthly</a></li>
 					                    </ul>
 				                 	 </li>
+				                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
+					                    <ul class="nav child_menu">
+					                      	<li><a href="./customer/add">Add customer</a></li>
+			                      			<li><a href="./customer/select">Edit customer</a></li>
+					                    </ul>
+				                 	 </li>
 		                		</ul>
 		            		</div>
-		            		<div class='menu_section'>
-	            				<h3>Reports</h3>
-	            			</div>
 	           			</div>
 	<!-- 				/sidebar menu        		 -->
 					</div>
@@ -81,11 +85,11 @@
 		            <div class="clearfix"></div>
 		            <br/>
 		            <div class='row'>
-						<div class="col-md-4 col-sm-4 col-xs-12">
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Loan</h2>
-									<div class="clearfix"></div><br/>
+									<h2><i class="fa fa-inr"></i> Loans</h2>
+									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/add" class="btn btn-default btn-block">Add Loan</a></div>
@@ -93,15 +97,29 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-12">
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Reports</h2>
-									<div class="clearfix"></div><br/>
+									<h2><i class="fa fa-line-chart"></i> Reports</h2>
+									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/reports/daily" class="btn btn-default btn-block">Daily</a></div>
-									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app//reports/monthly" class="btn btn-default btn-block">Monthly</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/reports/monthly" class="btn btn-default btn-block">Monthly</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class='row'>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2><i class="fa fa-users"></i> Customers</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/customer/add" class="btn btn-default btn-block">Add</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/customer/select" class="btn btn-default btn-block">Update</a></div>
 								</div>
 							</div>
 						</div>

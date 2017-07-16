@@ -1,6 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,7 +7,7 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<title>TM - Select Loan</title>
+		<title>TM - Select Customer</title>
 		
 		<!-- Bootstrap -->
 	    <link href="/TM_UI/package/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,30 +37,30 @@
             		
 <!-- 				sidebar menu -->
             		<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-	            		<div class="menu_section">
-		            		<h3>Entry/Changes</h3>
-			                <ul class="nav side-menu">
+						<div class="menu_section">
+							<h3>Entry/Changes</h3>
+							<ul class="nav side-menu">
 								<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
-			                      		<li><a href="./loan/add">Add loan</a></li>
-			                      		<li><a href="./loan/select">Edit loan</a></li>
+			                      		<li><a href="../loan/add">Add loan</a></li>
+			                      		<li><a href="../loan/select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
 		                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="./reports/daily">Daily</a></li>
-		                      			<li><a href="./reports/monthly">Monthly</a></li>
+				                      	<li><a href="../reports/daily">Daily</a></li>
+		                      			<li><a href="../reports/monthly">Monthly</a></li>
 				                    </ul>
 			                 	 </li>
 			                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="./customer/add">Add customer</a></li>
-		                      			<li><a href="./customer/select">Edit customer</a></li>
+				                      	<li><a href="add">Add customer</a></li>
+		                      			<li><a href="select">Edit customer</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>
-	            		</div>
-	            		<div class='menu_section'>
+						</div>
+						<div class='menu_section'>
             				<h3>Reports</h3>
             			</div>
            			</div>
@@ -82,55 +81,37 @@
 <!-- 		/top navigation -->
 <!-- 		right column|page content -->
 			<div class="right_col" role="main">
-				<div class='row'>
+	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								<h2>
-									Balance sheet-Daily
-								</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-								</ul>
-								<div class="clearfix"></div>
+						<form:form action ="view" method="get" modelAttribute="viewCustomerForm">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Customers</h2>
+									<div class="clearfix"></div><br/>
+								</div>
+								<div class="x_content">
+									<div class="form-horizontal form-label-left input_mask">
+		                    			<div class="form-group">
+					                        <label class="control-label col-md-1 col-sm-2 col-xs-12">Customer Id</label>
+					                        <div class="col-md-3 col-sm-3 col-xs-12">
+					                        	<form:input id="selectCustomerId" path="customerId" type="text" class="form-control"/>
+					                        </div>
+					                        <div class="col-md-6 col-sm-6 col-xs-12">
+					                          <button class="btn btn-success" type="submit">Submit</button>
+					                          <button class="btn btn-primary" type="reset" >Reset</button>
+					                        </div>
+				                      	</div>
+				            		</div>
+				            	</div>
 							</div>
-							<div class="x_content">
-								<p class="text-muted font-13 m-b-30">
-									Outstanding
-								</p>
-								<table id="datatable" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Date</th>
-											<th>Principal</th>
-											<th>RoInterest</th>
-											<th>RoPrincipal</th>
-											<th>App_Charges</th>
-											<th>Closing Balance</th>
-											
-										</tr>
-									</thead>
-
-									<tbody>
-										<tr>
-											<td><fmt:formatDate type = "date" value = "${dailyReport.date}" /></td>
-											<td>${dailyReport.principal}</td>
-											<td>${dailyReport.roi}</td>
-											<td>${dailyReport.rop}</td>
-											<td>${dailyReport.appraisalCharges}</td>
-											<td>${dailyReport.closingBalance}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+		            	</form:form>
+		            </div>
+	            </div>
 			</div>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+	</script>
 	<!-- Theme import statements -->
 	<!-- jQuery -->
 	<script src="/TM_UI/package/vendors/jquery/dist/jquery.min.js"></script>

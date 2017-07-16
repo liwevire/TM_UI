@@ -47,16 +47,22 @@
 		            		<div class="menu_section">
 			            		<h3>Entry/Changes</h3>
 				                <ul class="nav side-menu">
-									<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
+									<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 				                    	<ul class="nav child_menu">
 				                      		<li><a href="add">Add loan</a></li>
 				                      		<li><a href="select">Edit loan</a></li>
 				                    	</ul>
 			                  		</li>
-			                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+			                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
 					                    <ul class="nav child_menu">
 					                      	<li><a href="../reports/daily">Daily</a></li>
 			                      			<li><a href="../reports/monthly">Monthly</a></li>
+					                    </ul>
+				                 	 </li>
+				                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
+					                    <ul class="nav child_menu">
+					                      	<li><a href="../customer/add">Add customer</a></li>
+			                      			<li><a href="../customer/select">Edit customer</a></li>
 					                    </ul>
 				                 	 </li>
 		                		</ul>
@@ -110,6 +116,13 @@
 												<div class="x_content">
 					                    			<div class="form-horizontal form-label-left input_mask">
 					                    				<div class="form-group">
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Loan Id
+									                        </label>
+									                        <div class="col-md-6 col-sm-6 col-xs-12">
+									                        	<form:input id="loanId" path="loanId" type="text" class="form-control col-md-7 col-xs-12"/>
+									                        </div>
+								                      	</div>
+					                    				<div class="form-group">
 					                    				<%-- 				<div><form:input id="name" path="customer.name" type="text" class='autocomplete' onfocus="clearDetails()"/> First Name </div> --%>
 									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">First Name
 									                        </label>
@@ -127,7 +140,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="customerId" path="customer.customerId" type="number" readonly="true"></form:input> Customer ID </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Customer ID
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customerId">Customer ID
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="customerId" path="customer.customerId" type="number" class="form-control col-md-7 col-xs-12" readonly="true"/>
@@ -135,7 +148,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="customerDate" path="customer.date" type="text" readonly="true"></form:input> Customer since </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Customer since
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customerDate">Customer since
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="customerDate" path="customer.date" type="text" class="form-control col-md-7 col-xs-12" readonly="true"/>
@@ -143,7 +156,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="address" path="customer.address" type="text"/> Address </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Address
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="address" path="customer.address" type="text" class="form-control col-md-7 col-xs-12"/>
@@ -151,7 +164,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="post" path="customer.post"/> Post </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Post
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="post">Post
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="post" path="customer.post" type="text" class="form-control col-md-7 col-xs-12"/>
@@ -159,7 +172,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="post" path="customer.post"/> Post </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Pin
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pin">Pin
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="pin" path="customer.pin" type="text" class="form-control col-md-7 col-xs-12"/>
@@ -167,7 +180,7 @@
 								                      	</div>
 								                      	<div class="form-group">
 								                      	<%-- 				<div><form:input id="phone" path="customer.phone"/> Phone </div> --%>
-									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="loanId">Phone
+									                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phone">Phone
 									                        </label>
 									                        <div class="col-md-6 col-sm-6 col-xs-12">
 									                        	<form:input id="phone" path="customer.phone" type="text" class="form-control col-md-7 col-xs-12"/>

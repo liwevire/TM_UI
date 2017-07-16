@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Loan{
-	long loanId;
+	String loanId;
 	Customer customer;
 	String loanStatus;
 	double weight;
@@ -12,11 +12,11 @@ public class Loan{
 	List<Item> items = new ArrayList<Item>();
 	List<Transaction> transactions= new ArrayList<Transaction>();
 	public Loan() {		super();	}
-	public long getLoanId() {
+	public String getLoanId() {
 		return loanId;
 	}
-	public void setLoanId(long loanId) {
-		this.loanId= loanId;
+	public void setLoanId(String loanId) {
+		this.loanId = loanId;
 	}
 	public Customer getCustomer() {
 		return customer;

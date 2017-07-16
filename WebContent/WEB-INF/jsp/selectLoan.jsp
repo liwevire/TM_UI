@@ -40,16 +40,22 @@
 	            		<div class="menu_section">
 		            		<h3>Entry/Changes</h3>
 			                <ul class="nav side-menu">
-								<li><a><i class="fa fa-home"></i> Loan <span class="fa fa-chevron-down"></span></a>
+								<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
 			                      		<li><a href="add">Add loan</a></li>
 			                      		<li><a href="select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
-		                  		<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+		                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
 				                      	<li><a href="../reports/daily">Daily</a></li>
 		                      			<li><a href="../reports/monthly">Monthly</a></li>
+				                    </ul>
+			                 	 </li>
+			                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
+				                    <ul class="nav child_menu">
+				                      	<li><a href="../customer/add">Add customer</a></li>
+		                      			<li><a href="../customer/select">Edit customer</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>
@@ -81,14 +87,14 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>Select Loan</h2>
-									<div class="clearfix"></div><br/>
+									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
 									<div class="form-horizontal form-label-left input_mask">
 		                    			<div class="form-group">
 					                        <label class="control-label col-md-1 col-sm-2 col-xs-12">Loan Id</label>
 					                        <div class="col-md-3 col-sm-3 col-xs-12">
-					                        	<form:input id="selectLoanId" path="loanId" type="number" class="form-control"/>
+					                        	<form:input id="selectLoanId" path="loanId" type="text" class="form-control"/>
 					                        </div>
 					                        <div class="col-md-6 col-sm-6 col-xs-12">
 					                          <button class="btn btn-success" type="submit">Submit</button>

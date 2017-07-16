@@ -1,6 +1,7 @@
 package utility;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -41,10 +42,10 @@ public class CustomerUtility extends ConnectionUtility{
 		List<Customer> customers = mapper.readValue(response.toString(), new TypeReference<ArrayList<Customer>>() {});
 		return customers;
 	}
-	public Customer getCustomerByLoan(long loanId) throws Exception {
+	public Customer getCustomerByLoan(String loanId) throws Exception {
 		Customer customer = null;
-		connection = openConnection("http://localhost:6080/TM_Service/customer/get", "GET", 
-				"?loanId="+URLEncoder.encode(Long.toString(loanId),"UTF-8"));
+		connection = openConnection("http://localhost:6080/TM_Service/customer/getByLoanId", "GET", 
+				"?loanId="+loanId);
 		String output;
 		StringBuffer response = new StringBuffer();
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -55,24 +56,70 @@ public class CustomerUtility extends ConnectionUtility{
 		customer = mapper.readValue(response.toString(), Customer.class);
 		return customer;
 	}
-//	public String addCustomer(Customer customer) throws Exception {
-//		String jsonLoad = mapper.writeValueAsString(customer);
-//		byte[] postData = jsonLoad.getBytes();
-//		connection = openConnection("http://localhost:6080/TM_Service/customer/add", "POST",
-//				mapper.writeValueAsString(customer));
-//		connection.setRequestProperty("Content-Type", "application/json");
-//		connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
-//		try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-//			wr.write(postData);
-//		}
-//		
-//		String output;
-//		StringBuffer response = new StringBuffer();
-//		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-//			while ((output = in.readLine()) != null) {
-//				response.append(output);
-//			}
-//		}
-//		return response.toString();
-//	}
+	
+	public long addCustomer(Customer customer) throws Exception {
+		String jsonLoad = mapper.writeValueAsString(customer);
+		byte[] postData = jsonLoad.getBytes();
+		connection = openConnection("http://localhost:6080/TM_Service/customer/add", "POST",
+				mapper.writeValueAsString(customer));
+		connection.setRequestProperty("Content-Type", "application/json");
+		connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+		try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+			wr.write(postData);
+		}
+		
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		return Long.parseLong(response.toString());
+	}
+	public Customer getCustomer(String customerId) throws Exception {
+		String query = "?customerId="+customerId;
+		connection = openConnection("http://localhost:6080/TM_Service/customer/getByCustomerId", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		Customer customer = mapper.readValue(response.toString(), Customer.class);
+		return customer;
+	}
+	public String updateCustomer(Customer customer) throws Exception {
+		String jsonLoad = mapper.writeValueAsString(customer);
+		byte[] postData = jsonLoad.getBytes();
+		System.out.println(jsonLoad);
+		connection = openConnection("http://localhost:6080/TM_Service/customer/update", "POST",
+				mapper.writeValueAsString(customer));
+		connection.setRequestProperty("Content-Type", "application/json");
+		connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+		try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+			wr.write(postData);
+		}
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		return response.toString();
+	}
+	public String deleteCustomer(String customerId) throws Exception {
+		String query = "?customerId="+customerId;
+		connection = openConnection("http://localhost:6080/TM_Service/customer/delete", "GET", query);
+		String output;
+		StringBuffer response = new StringBuffer();
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+			while ((output = in.readLine()) != null) {
+				response.append(output);
+			}
+		}
+		return response.toString();
+	}
 }

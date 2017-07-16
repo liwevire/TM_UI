@@ -3,10 +3,15 @@ package utility;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.core.Customer;
+import model.core.Loan;
 import model.reports.Daily;
 
 public class DailyReportsUtility extends ConnectionUtility {
