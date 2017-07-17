@@ -42,20 +42,20 @@
 			                <ul class="nav side-menu">
 								<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
-			                      		<li><a href="./loan/add">Add loan</a></li>
-			                      		<li><a href="./loan/select">Edit loan</a></li>
+			                      		<li><a href="../loan/add">Add loan</a></li>
+			                      		<li><a href="../loan/select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
 		                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="./reports/daily">Daily</a></li>
-		                      			<li><a href="./reports/monthly">Monthly</a></li>
+				                      	<li><a href="../reports/daily">Daily</a></li>
+		                      			<li><a href="../reports/monthly">Monthly</a></li>
 				                    </ul>
 			                 	 </li>
 			                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="./customer/add">Add customer</a></li>
-		                      			<li><a href="./customer/select">Edit customer</a></li>
+				                      	<li><a href="../customer/add">Add customer</a></li>
+		                      			<li><a href="../customer/select">Edit customer</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>
@@ -83,18 +83,18 @@
 			<div class="right_col" role="main">
 	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<form:form action ="view" method="get" modelAttribute="dailyReportForm">
+						<form action ="view" method="get">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Select Report date</h2>
-									<div class="clearfix"></div><br/>
+									<h2>Select date</h2>
+									<div class="clearfix"></div>
 								</div>
 				            	<div class="x_content">
 									<div class="form-horizontal form-label-left input_mask">
 		                    			<div class="form-group">
-					                        <label class="control-label col-md-3 col-sm-2 col-xs-12">Report date</label>
+					                        <label class="control-label col-md-3 col-sm-2 col-xs-12">Miscellaneous Transaction Id</label>
 					                        <div class="col-md-3 col-sm-3 col-xs-12">
-					                        	<form:input id="selectDate" path="date" class="form-control date"/>
+					                        	<input name="transactionId" class="form-control" type="number"/>
 					                        </div>
 					                        <div class="col-md-6 col-sm-6 col-xs-12">
 					                          <button class="btn btn-success" type="submit">Submit</button>
@@ -104,7 +104,7 @@
 				            		</div>
 				            	</div>
 							</div>
-		            	</form:form>
+		            	</form>
 		            </div>
 	            </div>
 			</div>
@@ -164,11 +164,11 @@
 	<script src="/TM_UI/package/build/js/custom.min.js"></script>
 	
 	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.date').datepicker({dateFormat:'dd-mm-yy'});
-		});
-	</script>
+<!-- 	<script type="text/javascript"> -->
+// 		$(document).ready(function(){
+// 			$('.date').datepicker({dateFormat:'dd-mm-yy'});
+// 		});
+<!-- 	</script> -->
 	
 </body>
 </html>

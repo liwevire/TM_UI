@@ -79,5 +79,4 @@ public class CustomerController {
 		String deletionStatus = customerUtility.deleteCustomer(customerId);
 		return deletionStatus;
 	}
-	
 }

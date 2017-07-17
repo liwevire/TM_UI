@@ -33,7 +33,7 @@
         	<div class="col-md-3 left_col">
           		<div class="left_col scroll-view">
             		<div class="navbar nav_title" style="border: 0;">
-            			<a href="../home" class="site_title"><i class="fa fa-paw"></i> <span>TM</span></a>
+            			<a href="../../home" class="site_title"><i class="fa fa-paw"></i> <span>TM</span></a>
             		</div>
             		<div class="clearfix"></div>
             		<br/>
@@ -45,8 +45,8 @@
 			                <ul class="nav side-menu">
 								<li><a><i class="fa fa-inr"></i> Loans <span class="fa fa-chevron-down"></span></a>
 			                    	<ul class="nav child_menu">
-			                      		<li><a href="../loan/add">Add loan</a></li>
-			                      		<li><a href="../loan/select">Edit loan</a></li>
+			                      		<li><a href="../../loan/add">Add loan</a></li>
+			                      		<li><a href="../../loan/select">Edit loan</a></li>
 			                    	</ul>
 		                  		</li>
 		                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
@@ -57,8 +57,8 @@
 			                 	 </li>
 			                 	 <li><a><i class="fa fa-users"></i> Customers <span class="fa fa-chevron-down"></span></a>
 				                    <ul class="nav child_menu">
-				                      	<li><a href="../customer/add">Add customer</a></li>
-		                      			<li><a href="../customer/select">Edit customer</a></li>
+				                      	<li><a href="../../customer/add">Add customer</a></li>
+		                      			<li><a href="../../customer/select">Edit customer</a></li>
 				                    </ul>
 			                 	 </li>
 	                		</ul>
@@ -89,7 +89,8 @@
 						<div class="x_panel">
 							<div class="x_title">
 								<h2>
-									Balance sheet-Daily
+									Balance sheet-Daily 
+									<a href="recalculateDaily?calculationDate=<fmt:formatDate type = "date" pattern = "MM/dd/yyyy" value = "${dailyReport.date}" />"><i class="fa fa-refresh"></i></a>
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i

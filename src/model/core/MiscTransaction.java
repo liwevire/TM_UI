@@ -3,9 +3,12 @@ package model.core;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class MiscTransaction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	long transactionId;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	Date date;
 	double amount;
 	String description;

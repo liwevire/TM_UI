@@ -123,6 +123,19 @@
 								</div>
 							</div>
 						</div>
+					
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2><i class="fa fa-cubes"></i> Miscellaneous Transactions</h2>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/miscTransaction/add" class="btn btn-default btn-block">Add</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/miscTransaction/select" class="btn btn-default btn-block">Update</a></div>
+								</div>
+							</div>
+						</div>
 					</div>
 		         </div>
 	<!-- 		/right column|page content -->

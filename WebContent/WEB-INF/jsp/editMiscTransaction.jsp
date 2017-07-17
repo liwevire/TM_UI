@@ -8,7 +8,7 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<title>TM - Select Loan</title>
+		<title>TM - Edit misc. transaction details</title>
 		
 		<!-- Bootstrap -->
 	    <link href="/TM_UI/package/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -82,52 +82,117 @@
 <!-- 		/top navigation -->
 <!-- 		right column|page content -->
 			<div class="right_col" role="main">
-				<div class='row'>
+				<div class="page-title">
+	              <div class="title_left">
+	                <h3>Update miscellaneous transactions</h3>
+	              </div>
+	            </div>
+	            <div class="clearfix"></div>
+	            <br/>
+	            <div class='row'>
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								<h2>
-									Balance sheet-Daily
-								</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-								</ul>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content">
-								<p class="text-muted font-13 m-b-30">
-									Outstanding
-								</p>
-								<table id="datatable" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Date</th>
-											<th>Principal</th>
-											<th>RoInterest</th>
-											<th>RoPrincipal</th>
-											<th>App_Charges</th>
-											<th>Closing Balance</th>
-											
-										</tr>
-									</thead>
+						<form:form action ="/TM_UI/app/miscTransaction/update" method="post" modelAttribute="miscTransactionForm">
+							<div class="form-horizontal form-label-left input_mask">
+								<div class="x_panel">
+									<div class="x_title">
+										<h2>Misc. Transaction details</h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<li><a class="collapse-link"><i
+													class="fa fa-chevron-up"></i></a></li>
+										</ul>
+										<div class="clearfix"></div>
+										<br />
+									</div>
+									<div class="x_content">
+										<div class="form-horizontal form-label-left input_mask">
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+													for="transactionId">Transaction Id </label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+													<form:input id="transactionId"
+														class="form-control col-md-7 col-xs-12"
+														path="transactionId" type="number" 
+														readonly="true" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+													for="date">Date </label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+													<form:input id="date"
+														class="form-control col-md-7 col-xs-12 date"
+														path="date"
+														/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+													for="description">Description </label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+													<form:input
+														class="form-control col-md-7 col-xs-12"
+														id="description" path="description"
+														type="text"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+													for="amount">Amount</label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+													<form:input id="amount" path="amount"
+														class="form-control col-md-7 col-xs-12"></form:input>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12"
+													for="transactionType">Transaction type </label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+													<form:input id="transactionType" path="transactionType"
+														type="text" class="form-control col-md-7 col-xs-12"></form:input>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+										<button class="btn btn-primary" type="reset">Reset</button>
+										<button class="btn btn-success" type="submit">Submit</button>
+										<button type="button" class="btn btn-warning"
+											data-toggle="modal" data-target="#deletionModal">Delete</button>
 
-									<tbody>
-										<tr>
-											<td><fmt:formatDate type = "date" value = "${dailyReport.date}" /></td>
-											<td>${dailyReport.principal}</td>
-											<td>${dailyReport.roi}</td>
-											<td>${dailyReport.rop}</td>
-											<td>${dailyReport.appraisalCharges}</td>
-											<td>${dailyReport.closingBalance}</td>
-										</tr>
-									</tbody>
-								</table>
+										<!-- Deletion modal -->
+										<div class="modal fade" id="deletionModal" role="dialog">
+											<div class="modal-dialog">
+
+												<!-- Deletion Modal content-->
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4 class="modal-title">Delete miscellaneous transaction?</h4>
+													</div>
+													<div class="modal-body">
+														<p>
+															Are you sure that you want to delete the <b>Misc. transaction - '${miscTransactionForm.transactionId}'. '${miscTransactionForm.description}'</b> ?
+														</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal" onclick="deleteMiscTransaction()">Confirm Delete</button>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
+						</form:form>
+					</div>	            
+	            </div>
 			</div>
+			<!-- 		/right column|page content -->
 		</div>
 	</div>
 	
@@ -183,6 +248,28 @@
 
 	<!-- Custom Theme Scripts -->
 	<script src="/TM_UI/package/build/js/custom.min.js"></script>
-	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.date').datepicker({dateFormat:'dd-mm-yy'});
+		});
+		function deleteMiscTransaction() {
+			$.ajax({
+				  method: "GET",
+				  url: "/TM_UI/app/miscTransaction/delete",
+				  data: { transactionId: ${miscTransactionForm.transactionId} }
+				})
+				.error(function(status){
+					alert("Failed to delete the misc. transaction");
+				})
+				.success(function(status){
+					if(status=="success"){
+						alert("Misc. transaction deleted successfully");
+						window.location.replace("/TM_UI/app/miscTransaction/select");	
+					}
+					else
+						alert("Failed to delete the misc. transaction");
+				})
+		}
+	</script>
 </body>
 </html>

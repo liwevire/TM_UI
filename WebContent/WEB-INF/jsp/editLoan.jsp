@@ -286,7 +286,7 @@
 													<label class="control-label col-md-6 col-sm-6 col-xs-8">Total Weight
 							                        </label>
 							                        <div class="col-md-6 col-sm-6 col-xs-4">
-							                        	<form:input id="weight" path="weight" class="editable form-control col-md-3 col-sm-3 col-xs-4" readonly="true"/>
+							                        	<form:input id="weight" path="weight" class="form-control col-md-3 col-sm-3 col-xs-4"/>
 													</div>
 												</div>
 											</div>
