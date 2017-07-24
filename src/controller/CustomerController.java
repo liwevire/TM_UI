@@ -46,11 +46,13 @@ public class CustomerController {
 		if (customerId > 0 )			message = "Customer added successfully. Customer ID: "+customerId;
 		else			message = "Customer addition failure";
 		redirectAttributes.addFlashAttribute("message",message);
+		redirectAttributes.addFlashAttribute("customerId",customerId);
 		return "redirect:getCustomerAdditionStatus";
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/getCustomerAdditionStatus")
-	public String getCustomerStatus(@ModelAttribute("message") String status){
+	public String getCustomerStatus(@ModelAttribute("message") String status,@ModelAttribute("customerId") long customerId){
+		status += " click <a href =\'/TM_UI/app/customer/view?customerId=" + customerId+ "\'>here</a> to the changes";
 		return status;
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/select")
@@ -71,6 +73,7 @@ public class CustomerController {
 		customerUtility.updateCustomer(customer);
 		String message= "Updated successfully";
 		redirectAttributes.addFlashAttribute("message",message);
+		redirectAttributes.addFlashAttribute("customerId",customer.getCustomerId());
 		return "redirect:getCustomerAdditionStatus";
 	}
 	@ResponseBody

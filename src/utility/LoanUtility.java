@@ -18,6 +18,7 @@ public class LoanUtility extends ConnectionUtility{
 	ObjectMapper mapper = new ObjectMapper();
 	public String addLoan(Loan loan) throws Exception {
 		String jsonLoad = mapper.writeValueAsString(loan);
+		System.out.println(jsonLoad);
 		byte[] postData = jsonLoad.getBytes();
 		connection = openConnection("http://localhost:6080/TM_Service/loan/add", "POST",
 				mapper.writeValueAsString(loan));
@@ -106,6 +107,9 @@ public class LoanUtility extends ConnectionUtility{
 		String output;
 		StringBuffer response = new StringBuffer();
 		List<Loan> loans= mapper.readValue(new InputStreamReader(connection.getInputStream()), new TypeReference<ArrayList<Loan>>() {});
+		for (Loan loan : loans) {
+			System.out.println(loan.getLoanId());
+		}
 		return loans;
 	}
 	public String deleteLoan(String loanId) throws Exception {

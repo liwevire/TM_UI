@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import model.core.Loan;
 import model.core.Outstanding;
+import model.core.Transaction;
 import utility.LoanUtility;
 
 @EnableWebMvc
@@ -45,8 +48,9 @@ public class LoanController {
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/getLoanAdditionStatus")
-	public String getLoanStatus(@ModelAttribute("message") String status){
-		return status;
+	public String getLoanStatus(@ModelAttribute("message") String status,@ModelAttribute("loanId") String loanId){
+		status += " click <a href =\'/TM_UI/app/loan/view?loanId=" + loanId+ "\'>here</a> to the changes";
+		return status ;
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/select")
 	public String editLoan(Model model) throws Exception {
@@ -60,6 +64,9 @@ public class LoanController {
 		model.addAttribute("editLoanForm", loan);
 		model.addAttribute("loan", loan);
 		model.addAttribute("outstanding", outstanding);
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("transactionTypesJson", mapper.writeValueAsString(Transaction.TRANSACTIONTYPES));
+		model.addAttribute("transactionTypes", Transaction.TRANSACTIONTYPES);
 		return "editLoan";
 	}
 	
@@ -72,6 +79,7 @@ public class LoanController {
 //		}
 		String message= "Updated successfully";
 		redirectAttributes.addFlashAttribute("message",message);
+		redirectAttributes.addFlashAttribute("loanId",loan.getLoanId());
 		return "redirect:getLoanAdditionStatus";
 	}
 	@ResponseBody
@@ -113,7 +121,7 @@ public class LoanController {
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/selectDate")
 	public String viewOpenLoan(Model model) throws Exception {
-		return "selectDatesForLoan";
+		return "getOpenLoans";
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/getOpenLoans")

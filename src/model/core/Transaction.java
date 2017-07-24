@@ -2,18 +2,24 @@ package model.core;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
-	public static final String PRINCIPAL = "principal";
-	public static final String FIRST_MONTH_INTEREST = "first_month_interest";
-	public static final String RETURN_ON_INTEREST="return_on_interest";
-	public static final String RETURN_ON_PRINCIPAL="return_on_principal";
-	public static final String RETURN_EXCESS_INTEREST="return_excess_interest";
-	public static final String RETURN_AMOUNT="return_amount";
-	public static final String APPRAISAL_CHARGES="appraisal_charges";
+	
+	public static Map<String, String> TRANSACTIONTYPES = new HashMap<String, String>();
+	static {
+		TRANSACTIONTYPES.put("PRINCIPAL", "principal");
+		TRANSACTIONTYPES.put("FIRST_MONTH_INTEREST", "first_month_interest");
+		TRANSACTIONTYPES.put("RETURN_ON_INTEREST", "return_on_interest");
+		TRANSACTIONTYPES.put("RETURN_ON_PRINCIPAL", "return_on_principal");
+		TRANSACTIONTYPES.put("RETURN_EXCESS_INTEREST", "return_excess_interest");
+		TRANSACTIONTYPES.put("RETURN_AMOUNT", "return_amount");
+		TRANSACTIONTYPES.put("APPRAISAL_CHARGES", "appraisal_charges");
+	}
 	
 	long transactionId;
 	Loan loan;

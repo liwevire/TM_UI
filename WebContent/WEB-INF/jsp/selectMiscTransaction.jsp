@@ -164,11 +164,11 @@
 	<script src="/TM_UI/package/build/js/custom.min.js"></script>
 	
 	
-<!-- 	<script type="text/javascript"> -->
-// 		$(document).ready(function(){
-// 			$('.date').datepicker({dateFormat:'dd-mm-yy'});
-// 		});
-<!-- 	</script> -->
+<!-- <!-- 	<script type="text/javascript"> --> -->
+<!-- // 		$(document).ready(function(){ -->
+<!-- // 			$('.date').datepicker({dateFormat:'dd-mm-yy'}); -->
+<!-- // 		}); -->
+<!-- <!-- 	</script> --> -->
 	
 </body>
 </html>

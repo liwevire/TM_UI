@@ -42,7 +42,7 @@
 				                    	<ul class="nav child_menu">
 				                      		<li><a href="./loan/add">Add loan</a></li>
 				                      		<li><a href="./loan/select">Edit loan</a></li>
-				                      		<li><a href="./loan/viewOpenLoans">Get open loans</a></li>
+				                      		<li><a href="./loan/selectDate">Get open loans</a></li>
 				                    	</ul>
 			                  		</li>
 			                  		<li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
@@ -92,8 +92,9 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/add" class="btn btn-default btn-block">Add Loan</a></div>
-									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/select" class="btn btn-default btn-block">Update Loan</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/add" class="btn btn-default btn-block">Add loan</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/select" class="btn btn-default btn-block">Update loan</a></div>
+									<div class="col-md-6 col-sm-6 col-xs-6"><a href="/TM_UI/app/loan/selectDate" class="btn btn-default btn-block">Get open loans</a></div>
 								</div>
 							</div>
 						</div>

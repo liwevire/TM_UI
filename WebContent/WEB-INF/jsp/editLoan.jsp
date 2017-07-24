@@ -212,9 +212,16 @@
 																	id="date${transactionListId}" name="transactions[${transactionListId}].date" type="text" value="${transaction.date}" readonly="readonly">
 															</div>
 															<div class="col-md-4 col-sm-4 col-xs-4">
-																<input 
+																<select 
 																	<c:if test="${transactionListId le 2}">readonly="true"</c:if>
-																	id="category${transactionListId}" name="transactions[${transactionListId}].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text" value="${transaction.category}">
+																	id="category${transactionListId}" name="transactions[${transactionListId}].category" class="form-control col-md-3 col-sm-3 col-xs-4" type="text">
+																	<c:forEach var="entry" items="${transactionTypes}">
+																		<option value='<c:out value="${entry.value}"/>'
+																		<c:if test='${transaction.category eq entry.value}'> selected=\'selected\'
+																		</c:if>
+																		><c:out value="${entry.value}"/></option>
+																	</c:forEach>
+																</select>
 															</div>
 															<div class="col-md-4 col-sm-4 col-xs-4">
 																<input class="editable form-control col-md-3 col-sm-3 col-xs-4"
@@ -470,8 +477,11 @@
 			}
 		}
 		function addMoreTransactionItem(){
+			
 			transactionRow="<div id = \"moreTransactionRow"+transactionListId+"\" class=\"form-group\"><div class=\"col-md-4 col-sm-4 col-xs-4\"><input class=\"date form-control col-md-3 col-sm-3 col-xs-4\" name=\"transactions["+transactionListId+"].date\" type=\"text\"/></div>";
-			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"transactions["+transactionListId+"].category\" class=\"form-control col-md-3 col-sm-3 col-xs-4\" type=\"text\"/></div>";
+			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><select name=\"transactions["+transactionListId+"].category\" class=\"form-control col-md-3 col-sm-3 col-xs-4\" type=\"text\"> "+
+				getTransactionType() +
+				"<select/></div>";
 			transactionRow+="<div class=\"col-md-4 col-sm-4 col-xs-4\"><input name=\"transactions["+transactionListId+"].amount\" class=\"form-control col-md-3 col-sm-3 col-xs-4\" type=\"number\"/></div>";
 			transactionRow+="</div>";
 			transactionListId += 1;
@@ -480,6 +490,16 @@
 				$("#removeTransactionItem").removeAttr("disabled");
 			}
 			$('.date').datepicker({dateFormat:'dd-mm-yy'});
+		}
+		function getTransactionType(){
+			var transactionTypes = ${transactionTypesJson};
+			var htmlGenerated = '';
+			for (var key in transactionTypes){
+				if(transactionTypes.hasOwnProperty(key)){
+					htmlGenerated +='<option value='+ transactionTypes[key] +'>' + transactionTypes[key] + '</option>'
+				}
+			}
+			return htmlGenerated;
 		}
 		function removeTransaction(){
 			transactionListId -= 1;

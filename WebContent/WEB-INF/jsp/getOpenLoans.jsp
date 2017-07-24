@@ -120,12 +120,6 @@
 											</div>
 										</div>
 									</div>
-<!-- 									<div class="form-group"> -->
-<!-- 										<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3"> -->
-<!-- 											<button class="btn btn-primary" type="reset">Reset</button> -->
-<!-- 											<button class="btn btn-success" onclick="getOpenLoans();">Submit</button> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
 								</div>
 							</div>
 							<div class="x_panel">
@@ -137,7 +131,48 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									test
+									<table id="datatable" class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Date</th>
+												<th>Name</th>
+												<th>Amount</th>
+												<th>Weight</th>
+											</tr>
+										</thead>
+										<tbody id='loanTable'>
+											<tr>
+												<td>1</td>
+												<td>12</td>
+												<td>test</td>
+												<td>1000</td>
+												<td>10</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td>13</td>
+												<td>bharath</td>
+												<td>2000</td>
+												<td>10</td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td>15</td>
+												<td>prem</td>
+												<td>400</td>
+												<td>10</td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td>46</td>
+												<td>nirmal</td>
+												<td>10000</td>
+												<td>10</td>
+											</tr>
+										
+										</tbody>
+									</table>
 								</div>
 							</div>
                    		</div>		
@@ -234,8 +269,13 @@
 					alert("Failed to fetch the loans");
 				})
 				.success(function(data){
-					alert("Loan deleted successfully");
-					alert(data);
+					var tableContent = '';
+					var loanData = jQuery.parseJSON(data);
+					$.each(obj, function(key,value) {
+						tableContent += '<tr><td>'+value.loanId+'</td>';
+						tableContent += '<tr><td>'+value.transactions[0].date+'</td>';
+						tableContent += '<tr><td>'+value.transactions[0].date+'</td>';
+					})
 				})
 			}
 		</script>

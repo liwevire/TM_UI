@@ -36,6 +36,7 @@ public class MiscTransactionController {
 		if (transactionId > 0 )			message = "Misc. Transaction added successfully. Transaction ID: "+transactionId;
 		else			message = "Misc. transaction addition failure";
 		redirectAttributes.addFlashAttribute("message",message);
+		redirectAttributes.addFlashAttribute("transactionId",transactionId);
 		return "redirect:getMiscTransactionAdditionStatus";
 	}
 	@RequestMapping(method=RequestMethod.GET, value="/select")
@@ -55,11 +56,13 @@ public class MiscTransactionController {
 		miscTransactionUtility.updateMiscTransaction(miscTransaction);
 		String message= "Updated successfully";
 		redirectAttributes.addFlashAttribute("message",message);
+		redirectAttributes.addFlashAttribute("transactionId",miscTransaction.getTransactionId());
 		return "redirect:getMiscTransactionAdditionStatus";
 	}
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.GET, value="/getMiscTransactionAdditionStatus")
-	public String getMiscTransactionAdditionStatus(@ModelAttribute("message") String status){
+	public String getMiscTransactionAdditionStatus(@ModelAttribute("message") String status,@ModelAttribute("transactionId") long transactionId){
+		status += " click <a href =\'/TM_UI/app/miscTransaction/view?transactionId=" + transactionId+ "\'>here</a> to the changes";
 		return status;
 	}
 	@ResponseBody
